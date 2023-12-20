@@ -13,11 +13,12 @@ void print(const std::initializer_list<T>& il) {
 }
 
 template<typename C>
-void print(const C& conteiner) {
-	for (auto x : conteiner) {
-		std::cout << x << ' ';
+void print(const C& cont) {
+	auto last = std::prev(cont.end());
+	for (auto it = cont.begin(); it != last; it++) {
+		std::cout << *it << ", ";
 	}
-	std::cout << std::endl;
+	std::cout << *last << std::endl;
 }
 
 

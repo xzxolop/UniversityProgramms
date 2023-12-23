@@ -4,8 +4,14 @@
 #include <functional>
 #include <iostream>
 #include <variant>
+#include <concepts>
 
 template<typename T>
+concept Printable = requires(const T & t) {
+	std::cout << t;
+};
+
+template<Printable T>
 void print(const std::initializer_list<T>& il) {
 	for (auto it = il.begin(); it != il.end(); ++it) {
 		std::cout << *it << ' ';

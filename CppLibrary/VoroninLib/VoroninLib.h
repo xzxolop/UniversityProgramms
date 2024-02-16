@@ -48,6 +48,7 @@ void print(const std::initializer_list<std::variant<int, double, std::string, ch
 	print_v(*last);
 }
 
+
 template<typename T>
 class myvector {
 public:
@@ -134,6 +135,82 @@ private:
 	int size;
 	T* data;
 };
+
+
+class binary
+{
+public:
+	binary() = default;
+
+	binary(int size) : number(size) {
+		for (int i = 0; i < number.size(); i++) {
+			number[i] = '0';
+		}
+		number[size - 1] = '1';
+	}
+
+	binary(const std::string& bin) : number(bin.size()) {
+		for (int i = 0; i < bin.size(); i++) {
+			number[number.size() - 1 - i] = bin[i];
+		}
+	}
+
+	void increnemt() {
+		for (int i = 0; i < number.size() - 1; i++) {
+			if (number[i] == '0') {
+				number[i] = '1';
+				return;
+			}
+			else if (number[i] == '1') {
+				number[i] = '0';
+				if (number[i + 1] == '0') {
+					number[i + 1] = '1';
+					return;
+				}
+				if (i + 2 == number.size()) {
+					number[i + 1] = '0';
+					number.push_back('1');
+					return;
+				}
+			}
+		}
+	}
+
+
+	void to_binary(int decNumb) {
+		int i = 0;
+		number.resize(0);
+		while (decNumb > 0) {
+			number.push_back((decNumb % 2) + '0'); // '0' тут очень важен
+			decNumb /= 2;
+			i++;
+		}
+	}
+
+	void print() const {
+		if (number.size() == 0) {
+			std::cout << "empty" << std::endl;
+		}
+		else {
+			for (int i = number.size() - 1; i >= 0; i--) {
+				std::cout << number[i];
+			}
+			std::cout << std::endl;
+		}
+	}
+
+	int size() const {
+		return number.size();
+	}
+
+	char operator[](int i) const {
+		return number[i];
+	}
+
+private:
+	std::vector<char> number;
+};
+
 
 
 #endif VORONIN_LIB_H_

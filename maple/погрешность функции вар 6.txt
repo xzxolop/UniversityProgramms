@@ -1,0 +1,22 @@
+restart;
+Digits:=12;
+
+a:=8.2;
+b:=7.5;
+c:=6.3;
+absa:=0.05;
+absb:=0.05;
+absc:=0.04;
+
+f:=(a,b,c)->b/(a+(c^2/(b+a*c)));
+f(a,b,c);
+
+pogr_sm:=(a,absa,b,absb)->absa+absb;
+pogr_pr:=(a,absa,b,absb)->b*absa+a*absb;
+pogr_st:=(a,absa,m)->m*(a^(m-1)) * absa;
+pogr_ch:=(a,absa,b,absb)-> (b*absa+a*absb)/b^2; 
+#ch - частное, pr - произведение.
+
+pf:= pogr_ch(b, absb, a+(c^2/(b+a*c)), pogr_sm(a, absa, c^2/(b+a*c), pogr_ch(c^2, pogr_st(c, absc, 2), b+a*c, pogr_sm(b, absb, a*c, pogr_pr(a, absa, c, absc)))));
+
+f(a,b,c)=0.8;

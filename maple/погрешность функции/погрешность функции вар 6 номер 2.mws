@@ -17,8 +17,8 @@ bsb:=0.05;\nabsc:=0.04;\n" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#>%\"aG$\"
 #" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 43 "f:=(a,b,c)->b/(a+(c^2/
 (b+a*c)));\n\nf(a,b,c);" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#>%\"fGf*6%%
 \"aG%\"bG%\"cG6\"6$%)operatorG%&arrowGF**&9%\"\"\",&9$F0*&9&\"\"#,&F/F
-0*&F2F0F4F0F0!\"\"F0F8F*F*F*" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#$\"+qr
-ha%)!#5" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 0 "" }}}{EXCHG 
+0*&F2F0F4F0F0!\"\"F0F8F*F*F*" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#$\"-!*
+prha%)!#7" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 0 "" }}}{EXCHG 
 {PARA 0 "> " 0 "" {MPLTEXT 1 0 201 "pogr_sm:=(a,absa,b,absb)->absa+abs
 b;\npogr_pr:=(a,absa,b,absb)->b*absa+a*absb;\npogr_st:=(a,absa,m)->m*(
 a^(m-1)) * absa;\npogr_ch:=(a,absa,b,absb)-> (b*absa+a*absb)/b^2; \n#c
@@ -34,12 +34,12 @@ G6\"6$%)operatorG%&arrowGF+*&,&*&9&\"\"\"9%F3F3*&9$F39'F3F3F3F2!\"#F+F
 +F+" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 162 "pf:= pogr_ch(b, abs
 b, a+(c^2/(b+a*c)), pogr_sm(a, absa, c^2/(b+a*c), pogr_ch(c^2, pogr_st
 (c, absc, 2), b+a*c, pogr_sm(b, absb, a*c, pogr_pr(a, absa, c, absc)))
-));" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#>%#pfG$\"+(eti>\"!#6" }}}
+));" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#>%#pfG$\"-B(eti>\"!#8" }}}
 {EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 13 "f(a,b,c)=0.8;" }}{PARA 11 "
-" 1 "" {XPPMATH 20 "6#/$\"+qrha%)!#5$\"\")!\"\"" }}}{EXCHG {PARA 0 "> \+
-" 0 "" {MPLTEXT 1 0 66 "# \342\345\360\355\373\354\350 \377\342\353
+" 1 "" {XPPMATH 20 "6#/$\"-!*prha%)!#7$\"\")!\"\"" }}}{EXCHG {PARA 0 "
+> " 0 "" {MPLTEXT 1 0 66 "# \342\345\360\355\373\354\350 \377\342\353
 \377\376\362\361\377 \357\345\360\342\373\351 \347\355\340\352 \357
 \356\361\353\345 \347\340\357\377\362\356\351, \350 \347\355\340\352
 \350 \344\356 \347\340\357\377\362\356\351.\n" }}}{EXCHG {PARA 0 "> " 
-0 "" {MPLTEXT 1 0 0 "" }}}}{MARK "7 0 0" 46 }{VIEWOPTS 1 1 0 1 1 1803 
+0 "" {MPLTEXT 1 0 0 "" }}}}{MARK "7 0 0" 0 }{VIEWOPTS 1 1 0 1 1 1803 
 1 1 1 1 }{PAGENUMBERS 0 1 2 33 1 1 }

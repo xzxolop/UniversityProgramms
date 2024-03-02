@@ -1,0 +1,29 @@
+{VERSION 6 0 "IBM INTEL NT" "6.0" }
+{USTYLETAB {CSTYLE "Maple Input" -1 0 "Courier" 0 1 255 0 0 1 0 1 0 0 
+1 0 0 0 0 1 }{CSTYLE "2D Math" -1 2 "Times" 0 1 0 0 0 0 0 0 2 0 0 0 0 
+0 0 1 }{CSTYLE "2D Output" 2 20 "" 0 1 0 0 255 1 0 0 0 0 0 0 0 0 0 1 }
+{PSTYLE "Normal" -1 0 1 {CSTYLE "" -1 -1 "" 0 1 0 0 0 0 0 0 0 0 0 0 0 
+0 0 0 }0 0 0 -1 -1 -1 0 0 0 0 0 0 -1 0 }{PSTYLE "Maple Output" 0 11 1 
+{CSTYLE "" -1 -1 "" 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 }3 3 0 -1 -1 -1 0 
+0 0 0 0 0 -1 0 }}
+{SECT 0 {EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 299 "restart;\n\n\nf0:=-
+9;\nf1:=-1;\nf2:=1;\nf3:=3;\nx0:=-2;\nx1:=-1;\nx2:=1;\nx3:=3;\nx:=0.5;
+\n\n# \320\345\370\345\355\350\345 \342 \353\356\341.\nL3 := f0*((x-x1
+)(x-x2)(x-x3))/((x0-x1)(x0-x2)(x0-x3))+f1*((x-x0)(x-x2)(x-x3))/((x1-x0
+)(x1-x2)(x1-x3))\n+f2*((x-x0)(x-x1)(x-x3))/((x2-x0)(x2-x1)(x2-x3)) + f
+3*((x-x0)(x-x1)(x-x2))/((x3-x0)(x3-x1)(x3-x2));\n" }}{PARA 0 "> " 0 "
+" {MPLTEXT 1 0 0 "" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#>%#f0G!\"*" }}
+{PARA 11 "" 1 "" {XPPMATH 20 "6#>%#f1G!\"\"" }}{PARA 11 "" 1 "" 
+{XPPMATH 20 "6#>%#f2G\"\"\"" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#>%#f3G
+\"\"$" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#>%#x0G!\"#" }}{PARA 11 "" 1 "
+" {XPPMATH 20 "6#>%#x1G!\"\"" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#>%#x2G
+\"\"\"" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#>%#x3G\"\"$" }}{PARA 11 "" 
+1 "" {XPPMATH 20 "6#>%\"xG$\"\"&!\"\"" }}{PARA 11 "" 1 "" {XPPMATH 20 
+"6#>%#L3G$\"+LLLL8!\")" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 291 "
+a:=-2; b:=1; n:=3; xc:=0.5; yc:=-5;\nX[0]:= ; F[0]:= ; ....\n# \357
+\356\361\362\360\356\345\355\350\345 \310\314 \313\340\343\360\340\355
+\346\340 \344\353\377 \364\363\355\352\366\350\350 F(x)\nLagr:=proc(n,
+ X, F)\nlocal i, j, ...;\nSum:=0:\nfor i from 0 to n do P:=1:\nfor j f
+rom 0 to n do if j<>i then P:=P* : end if: end do:\nSum:=Sum+ :\nend d
+o:\nLg:=simplify(Sum);\nreturn(Lg);\nend proc;" }}}}{MARK "0 0 0" 96 }
+{VIEWOPTS 1 1 0 1 1 1803 1 1 1 1 }{PAGENUMBERS 0 1 2 33 1 1 }

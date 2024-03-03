@@ -396,3 +396,7 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+CppLibrary/VoroninLib.vcxproj.filters
+CppLibrary/VoroninLib.vcxproj
+CppLibrary/VoroninLib/VoroninLib.vcxproj.filters
+CppLibrary/VoroninLib/VoroninLib.vcxproj

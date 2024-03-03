@@ -5,6 +5,7 @@
 #include <iostream>
 #include <variant>
 #include <concepts>
+#include <ostream>
 
 template<typename T>
 concept Printable = requires(const T & t) {
@@ -210,6 +211,65 @@ public:
 private:
 	std::vector<char> number;
 };
+
+
+template<typename T>
+class Tree {
+private:
+	void prefix_help(Tree* root) const {
+		if (root == nullptr) return;
+		std::cout << root->Data;
+		prefix_help(root->Left);
+		prefix_help(root->Right);
+	}
+
+public:
+	T Data;
+	Tree* Left;
+	Tree* Right;
+
+	Tree() {
+		Data = T();
+		Left = nullptr;
+		Right = nullptr;
+	}
+
+	Tree(Tree& other) {
+		Data = other.Data;
+		Left = other.Left;
+		Right = other.Right;
+	}
+
+	void insert(const Tree<T>* n) {
+		if (n->Data < Data) {
+			if (Left == nullptr) {
+				Left = n;
+			} 
+			else {
+				Left->insert(n);
+			}
+		}
+		else if (n->Data > Data) {
+			if (Right == nullptr) {
+				Right = n;
+			}
+			else {
+				Right->insert(n);
+			}
+		}
+	}
+
+	void print_prefix() {
+		prefix_help(this);
+	}
+
+	friend std::ostream& operator<<(std::ostream& os, Tree& t) {
+
+		os << t.Data;
+		return os;
+	}
+};
+
 
 
 

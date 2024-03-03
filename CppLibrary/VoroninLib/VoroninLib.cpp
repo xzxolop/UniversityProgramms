@@ -1,3 +1,4 @@
+/*
 #include "VoroninLib.h"
 
 void print_v(const std::variant<int, double, std::string, char>& v)
@@ -11,4 +12,4 @@ void print_v(const std::variant<int, double, std::string, char>& v)
 	else if (std::holds_alternative<char>(v))
 		std::cout << get<char>(v);
 }
-
+*/

@@ -213,6 +213,63 @@ private:
 };
 
 
+// List class with fictive root
+template<typename T>
+class List {
+private:
+	struct node {
+		T data;
+		node* next;
+		node* prev;
+		node(T d) : data(d), next(nullptr), prev(nullptr) {}
+		node(T d, node* n, node* p) : data(d), next(n), prev(p) {}
+	};
+
+	node* root;
+public:
+
+	List() {
+		root = new node(T());
+	}
+
+	List(const List& lst) {
+		root = lst.root;
+	}
+
+	List(std::initializer_list<T> il): List() {
+		for (auto x : il) {
+			push_back(x);
+		}
+	}
+
+	void push_back(T elem) {
+		if (root == nullptr) { 
+			root = new node(elem);
+			return;
+		}
+
+		node* next = root;
+		while (next->next != nullptr) {
+			next = next->next;
+		}
+		next->next = new node(elem, nullptr, next); 
+	}
+	
+	void print() const {
+		node* next = root;
+		while (next != nullptr)
+		{
+			std::cout << next->data << ' ';
+			next = next->next;
+		}
+		std::cout << std::endl;
+		
+	}
+	
+};
+
+
+
 template<typename T>
 class Tree {
 private:

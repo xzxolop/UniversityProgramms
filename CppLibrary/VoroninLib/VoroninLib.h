@@ -218,7 +218,7 @@ class Tree {
 private:
 	void prefix_help(Tree* root) const {
 		if (root == nullptr) return;
-		std::cout << root->Data;
+		std::cout << root->Data << ' ';
 		prefix_help(root->Left);
 		prefix_help(root->Right);
 	}
@@ -240,7 +240,9 @@ public:
 		Right = other.Right;
 	}
 
-	void insert(const Tree<T>* n) {
+	Tree(T data): Data(data), Left(nullptr), Right(nullptr) {}
+
+	void insert(Tree<T>* n) {
 		if (n->Data < Data) {
 			if (Left == nullptr) {
 				Left = n;

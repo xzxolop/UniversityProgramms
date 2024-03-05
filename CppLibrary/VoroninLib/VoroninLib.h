@@ -243,16 +243,21 @@ public:
 	}
 
 	void push_back(T elem) {
-		if (root == nullptr) { 
-			root = new node(elem);
+		if (root->next == nullptr) {
+			root->next = new node(elem);
 			return;
 		}
 
-		node* next = root;
-		while (next->next != nullptr) {
-			next = next->next;
+		node* n = root;
+		while (n->next != nullptr) {
+			n = n->next;
 		}
-		next->next = new node(elem, nullptr, next); 
+		n->next = new node(elem);
+		n->prev = n;
+	}
+
+	node* get_root() const {
+		return root;
 	}
 	
 	void print() const {
@@ -263,8 +268,18 @@ public:
 			next = next->next;
 		}
 		std::cout << std::endl;
-		
 	}
+
+	friend std::ostream& operator<<(std::ostream& os, const List& l) {
+		node* next = l.root;
+		while (next != nullptr)
+		{
+			os << next->data << ' ';
+			next = next->next;
+		}
+		return os;
+	}
+	
 	
 };
 

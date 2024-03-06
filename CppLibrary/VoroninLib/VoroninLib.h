@@ -6,6 +6,8 @@
 #include <variant>
 #include <concepts>
 #include <ostream>
+#include <stack>
+#include <queue>
 
 template<typename T>
 concept Printable = requires(const T & t) {
@@ -310,60 +312,385 @@ public:
 
 template<typename T>
 class Tree {
+	struct Node {
+		Node* parent;
+		T data;
+		Node* left;
+		Node* right;
+
+		Node(Node* parent, const T& data, Node* left = nullptr, Node* right = nullptr) : parent(parent), data(data), left(left), right(right) {}
+
+		Node(Node* parent, T&& data, Node* left = nullptr, Node* right = nullptr) : parent(parent), data(std::move(data)), left(left), right(right) {}
+
+		Node(const T& val) : parent(nullptr), data(val), left(nullptr), right(nullptr) {}
+
+		Node(T&& val) : parent(nullptr), data(std::move(val)), left(nullptr), right(nullptr) {}
+
+		friend std::ostream& operator«(std::ostream& os, Node& n) {
+			return os « n.data;
+		}
+	};
+
 private:
-	void prefix_help(Tree* root) const {
-		if (root == nullptr) return;
-		std::cout << root->Data << ' ';
-		prefix_help(root->Left);
-		prefix_help(root->Right);
+	Node* root;
+
+	void setChild(Node* parent, Node* node, Node* child) {
+		if (parent) {
+			if (parent->right == node)
+				parent->right = child;
+			else
+				parent->left = child;
+		}
+		else
+			root = child;
+		delete node;
+	}
+
+	void LKP_helper(Node* node) {
+		if (!node)
+			return;
+		LKP_helper(node->left);
+		std::cout «* node « " ";
+		LKP_helper(node->right);
+	}
+
+	void setMin(Node* node) {
+		while (node->left)
+			node = node->left;
+	}
+
+	bool Equal_helper(const Node* r1, const Node* r2) {
+		return (r1 && r2) ? (r1->data == r2->data && Equal_helper(r1->left, r2->left) && Equal_helper(r1->right, r2->right)) : (!r1 && !r2);
 	}
 
 public:
-	T Data;
-	Tree* Left;
-	Tree* Right;
-
-	Tree() {
-		Data = T();
-		Left = nullptr;
-		Right = nullptr;
+	Tree() :root(nullptr) {}
+	Tree(const Tree& other) : root(other.root) {}
+	Tree(Tree&& other) : Tree() {
+		std::swap(other.root, root);
 	}
 
-	Tree(Tree& other) {
-		Data = other.Data;
-		Left = other.Left;
-		Right = other.Right;
-	}
+	class Iterator {
+	public:
+		using iterator_category = std::forward_iterator_tag;
+		using value_type = T;
+		using difference_type = std::ptrdiff_t;
+		using pointer = T*;
+		using reference = T&;
 
-	Tree(T data): Data(data), Left(nullptr), Right(nullptr) {}
+		Iterator(Node* node) : current(node) {}
 
-	void insert(Tree<T>* n) {
-		if (n->Data < Data) {
-			if (Left == nullptr) {
-				Left = n;
-			} 
+		reference operator*() {
+			return current->data;
+		}
+
+		pointer operator->() {
+			return &current->data;
+		}
+
+		Iterator& operator++() {
+			if (current == nullptr) {
+				return *this;
+			}
+
+			if (current->left) {
+				current = current->left;
+			}
+			else if (current->right) {
+				current = current->right;
+			}
 			else {
-				Left->insert(n);
+				Node* parent = current->parent;
+				while (parent != nullptr && (parent->right == current || parent->right == nullptr)) {
+					current = parent;
+					parent = parent->parent;
+				}
+				if (parent == nullptr) {
+					current = nullptr;
+				}
+				else {
+					current = parent->right;
+				}
+			}
+			return *this;
+		}
+
+		bool operator==(const Iterator& other) const {
+			return current == other.current;
+		}
+
+		bool operator!=(const Iterator& other) const {
+			return !(*this == other);
+		}
+
+	private:
+		Node* current;
+	};
+
+	Iterator begin() {
+		return Iterator(root);
+	}
+
+	Iterator end() {
+		return Iterator(nullptr);
+	}
+
+	void insert(T&& data) {
+		if (!root) {
+			root = new Node(std::move(data));
+			return;
+		}
+		Node* node = root;
+		while (node) {
+			if (data < node->data) {
+				if (node->left)
+					node = node->left;
+				else {
+					node->left = new Node(node, std::move(data));
+					break;
+				}
+			}
+			else if (data > node->data) {
+				if (node->right)
+					node = node->right;
+				else {
+					node->right = new Node(node, std::move(data));
+					break;
+				}
+			}
+			else
+				break;
+		}
+	}
+
+	void insert(const T& data) {
+		insert(std::move(T(data)));
+	}
+
+	Node* find(const T& data) {
+		Node* node = root;
+		while (node) {
+			if (data < node->data) {
+				if (node->left)
+					node = node->left;
+				else {
+					return nullptr;
+				}
+			}
+			else {
+				if (data > node->data) {
+					if (node->right)
+						node = node->right;
+					else {
+						return nullptr;
+					}
+				}
+				else {
+					return node;
+				}
 			}
 		}
-		else if (n->Data > Data) {
-			if (Right == nullptr) {
-				Right = n;
+		return node;
+	}
+
+	Node* findMax() {
+		Node* node = root;
+		while (node->right)
+			node = node->right;
+		return node;
+	}
+
+	Node* findMin() {
+		Node* node = root;
+		while (node->left)
+			node = node->left;
+		return node;
+	}
+
+	Node* Bound_upper(T data) {
+		Node* res = nullptr;
+		Node* cur = root;
+		while (cur) {
+			if (cur->data >= data) {
+				res = cur;
+				cur = cur->left;
 			}
 			else {
-				Right->insert(n);
+				cur = cur->right;
+			}
+
+		}
+		return res;
+	}
+
+	Node* Bound_lower(T data) {
+		Node* res = nullptr;
+		Node* cur = root;
+		while (cur) {
+			if (cur->data <=
+				data) {
+				res = cur;
+				cur = cur->right;
+			}
+			else
+				cur = cur->left;
+		}
+		return res;
+	}
+
+	void deleteEl(T data) {
+		Node* node = find(data);
+		if (!node)
+			return;
+		Node* parent = node->parent;
+		if (!node->right) {
+			setChild(parent, node, node->left);
+
+		}
+		else {
+			if (!node->left && node->right) {
+				setChild(parent, node, node->right);
+			}
+			else {
+				Node* change = node->left;
+				while (change->right)
+					change = change->right;
+				std::swap(node->data, change->data);
+				if (change->right)
+					setChild(change->parent, change, change->right);
+				else
+					setChild(change->parent, change, change->left);
 			}
 		}
 	}
 
-	void print_prefix() {
-		prefix_help(this);
+	void LKP_print() {
+		Node* cur = root;
+		LKP_helper(cur);
+		std::cout « std::endl;
 	}
 
-	friend std::ostream& operator<<(std::ostream& os, Tree& t) {
+	void PKL_print() {
+		Node* cur = root;
+		std::stack<Node*> st;
+		std::stack<Node*> out;
 
-		os << t.Data;
-		return os;
+		while (cur || !st.empty()) {
+			while (cur) {
+				st.push(cur);
+				out.push(cur);
+				cur = cur->right;
+			}
+			cur = st.top();
+			st.pop();
+			cur = cur->left;
+		}
+
+		while (!out.empty()) {
+			std::cout « out.top()->data « " ";
+			out.pop();
+		}
+
+		std::cout « std::endl;
+	}
+
+	void Layers_print() {
+		Node* cur = root;
+		std::queue<Node*> q;
+		q.push(cur);
+		while (!q.empty()) {
+			cur = q.front();
+			q.pop();
+			std::cout «* cur « " ";
+			if (cur->left)
+				q.push(cur->left);
+			if (cur->right)
+				q.push(cur->right);
+		}
+		std::cout « std::endl;
+	}
+
+	bool operator==(Tree& tree) {
+		Node* r1 = root;
+		Node* r2 = tree.root;
+		return Equal_helper(r1, r2);
+	}
+
+	Node* next(Node* node) {
+		Node* cur = node->right;
+		if (cur) {
+			while (cur->left)
+				cur = cur->left;
+		}
+		else {
+			T data = node->data;
+			cur = node->parent;
+			while (data > cur->data)
+				cur = cur->parent;
+		}
+		return cur;
+	}
+
+	Node* previous(Node* node) {
+		if (node != nullptr) {
+			Node* cur = node->left;
+			if (cur) {
+				while (cur->right)
+					cur = cur->right;
+			}
+			else {
+				T data = node->data;
+				cur = node->parent;
+				while (data < cur->data)
+					cur = cur->parent;
+			}
+			return cur;
+		}
+		return nullptr;
+	}
+
+	Iterator next(const Iterator& iter) const {
+		Node* node = iter.current;
+		if (node->right) {
+			return Iterator(node->right);
+		}
+		else {
+			Node* parent = node->parent;
+			while (parent != nullptr && parent->right == node) {
+				node = parent;
+				parent = parent->parent;
+			}
+			if (parent == nullptr) {
+				return Iterator(nullptr);
+			}
+			else {
+				return Iterator(parent->right);
+			}
+		}
+	}
+
+	Iterator previous(const Iterator& iter) const {
+		Node* node = iter.current;
+		if (node->left) {
+			Node* cur = node->left;
+			while (cur->right) {
+				cur = cur->right;
+			}
+			return Iterator(cur);
+		}
+		else {
+			Node* parent = node->parent;
+			while (parent != nullptr && parent->left == node) {
+				node = parent;
+				parent = parent->parent;
+			}
+			if (parent == nullptr) {
+				return Iterator(nullptr);
+			}
+			else {
+				return Iterator(parent);
+			}
+		}
 	}
 };
 

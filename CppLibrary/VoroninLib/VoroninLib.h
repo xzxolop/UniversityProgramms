@@ -226,14 +226,17 @@ private:
 	};
 
 	node* root;
+	int _size;
 public:
 
 	List() {
 		root = new node(T());
+		_size = 0;
 	}
 
 	List(const List& lst) {
 		root = lst.root;
+		_size = lst.size;
 	}
 
 	List(std::initializer_list<T> il): List() {
@@ -245,6 +248,7 @@ public:
 	void push_back(T elem) {
 		if (root->next == nullptr) {
 			root->next = new node(elem);
+			_size++;
 			return;
 		}
 
@@ -254,6 +258,7 @@ public:
 		}
 		n->next = new node(elem);
 		n->prev = n;
+		_size++;
 	}
 
 	void pop_back() {
@@ -269,6 +274,11 @@ public:
 		
 		delete n->next;
 		n->next = nullptr;
+		_size--;
+	}
+
+	int size() const {
+		return _size;
 	}
 
 	node* get_root() const {

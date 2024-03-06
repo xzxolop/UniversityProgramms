@@ -256,6 +256,21 @@ public:
 		n->prev = n;
 	}
 
+	void pop_back() {
+		if (root->next == nullptr) {
+			return;
+		}
+
+		node* n = root;
+		while (n->next->next != nullptr)
+		{
+			n = n->next;
+		}
+		
+		delete n->next;
+		n->next = nullptr;
+	}
+
 	node* get_root() const {
 		return root;
 	}
@@ -279,8 +294,6 @@ public:
 		}
 		return os;
 	}
-	
-	
 };
 
 

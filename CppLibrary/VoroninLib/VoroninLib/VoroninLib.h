@@ -326,8 +326,8 @@ class Tree {
 
 		Node(T&& val) : parent(nullptr), data(std::move(val)), left(nullptr), right(nullptr) {}
 
-		friend std::ostream& operator«(std::ostream& os, Node& n) {
-			return os « n.data;
+		friend std::ostream& operator<<(std::ostream& os, Node& n) {
+			return os << n.data;
 		}
 	};
 
@@ -350,7 +350,7 @@ private:
 		if (!node)
 			return;
 		LKP_helper(node->left);
-		std::cout «* node « " ";
+		std::cout <<* node << " ";
 		LKP_helper(node->right);
 	}
 
@@ -567,7 +567,7 @@ public:
 	void LKP_print() {
 		Node* cur = root;
 		LKP_helper(cur);
-		std::cout « std::endl;
+		std::cout << std::endl;
 	}
 
 	void PKL_print() {
@@ -587,11 +587,11 @@ public:
 		}
 
 		while (!out.empty()) {
-			std::cout « out.top()->data « " ";
+			std::cout << out.top()->data << " ";
 			out.pop();
 		}
 
-		std::cout « std::endl;
+		std::cout << std::endl;
 	}
 
 	void Layers_print() {
@@ -601,13 +601,13 @@ public:
 		while (!q.empty()) {
 			cur = q.front();
 			q.pop();
-			std::cout «* cur « " ";
+			std::cout <<* cur << " ";
 			if (cur->left)
 				q.push(cur->left);
 			if (cur->right)
 				q.push(cur->right);
 		}
-		std::cout « std::endl;
+		std::cout << std::endl;
 	}
 
 	bool operator==(Tree& tree) {

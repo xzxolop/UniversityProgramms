@@ -214,8 +214,7 @@ private:
 	std::vector<char> number;
 };
 
-
-// List class with fictive root
+// List with two fictive nodes
 template<typename T>
 class List {
 private:
@@ -227,87 +226,47 @@ private:
 		node(T d, node* n, node* p) : data(d), next(n), prev(p) {}
 	};
 
-	node* root;
-	int _size;
+	node* head, * tail; // in standart realisation of microsoft and gcc list zakolcovan
+	size_t _size;
+
 public:
+	List() : head(nullptr), tail(nullptr), _size(0) {}
 
-	List() {
-		root = new node(T());
-		_size = 0;
+	List(const List& other) {}
+
+	List(List&& other) : head(other.head), tail(other.head), _size(other.head) {
+		other.head = nullptr;
+		other.tail = nullptr;
+		other._size = 0;
 	}
 
-	List(const List& lst) {
-		root = lst.root;
-		_size = lst.size;
-	}
+	//List(std::initializer_list initLst) {}
 
-	List(std::initializer_list<T> il): List() {
-		for (auto x : il) {
-			push_back(x);
-		}
-	}
+	void push_back(const T& value) {
+		node* newNode = new node(value, tail, nullptr);
 
-	void push_back(T elem) {
-		if (root->next == nullptr) {
-			root->next = new node(elem);
-			_size++;
-			return;
+		if (tail != nullptr) {
+			tail->next = newNode; // why?
+			tail = newNode;
 		}
-
-		node* n = root;
-		while (n->next != nullptr) {
-			n = n->next;
+		else {
+			head = tail = newNode;
 		}
-		n->next = new node(elem);
-		n->prev = n;
 		_size++;
 	}
 
-	void pop_back() {
-		if (root->next == nullptr) {
-			return;
-		}
-
-		node* n = root;
-		while (n->next->next != nullptr)
-		{
-			n = n->next;
-		}
-		
-		delete n->next;
-		n->next = nullptr;
-		_size--;
-	}
-
-	int size() const {
-		return _size;
-	}
-
-	node* get_root() const {
-		return root;
-	}
-	
 	void print() const {
-		node* next = root;
-		while (next != nullptr)
+		node* n = head;
+		while (n != nullptr)
 		{
-			std::cout << next->data << ' ';
-			next = next->next;
+			std::cout << n->data << ' ';
+			n = n->next;
 		}
 		std::cout << std::endl;
 	}
 
-	friend std::ostream& operator<<(std::ostream& os, const List& l) {
-		node* next = l.root;
-		while (next != nullptr)
-		{
-			os << next->data << ' ';
-			next = next->next;
-		}
-		return os;
-	}
+	~List() {}
 };
-
 
 
 template<typename T>

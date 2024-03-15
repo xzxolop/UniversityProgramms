@@ -240,7 +240,11 @@ public:
 		other._size = 0;
 	}
 
-	//List(std::initializer_list initLst) {}
+	List(const std::initializer_list<T>& il) {
+		for (auto x : il) {
+			push_back(x);
+		}
+	}
 
 	void push_back(const T& value) {
 		node* newNode = new node(value, tail, nullptr);

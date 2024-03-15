@@ -223,7 +223,7 @@ private:
 		node* next;
 		node* prev;
 		node(T d) : data(d), next(nullptr), prev(nullptr) {}
-		node(T d, node* n, node* p) : data(d), next(n), prev(p) {}
+		node(T d, node* p, node* n) : data(d), prev(p), next(n) {}
 	};
 
 	node* head, * tail; // in standart realisation of microsoft and gcc list zakolcovan
@@ -244,15 +244,13 @@ public:
 
 	void push_back(const T& value) {
 		node* newNode = new node(value, tail, nullptr);
-
 		if (tail != nullptr) {
-			tail->next = newNode; // why?
+			tail->next = newNode;
 			tail = newNode;
 		}
 		else {
 			head = tail = newNode;
 		}
-		_size++;
 	}
 
 	void print() const {

@@ -255,6 +255,22 @@ public:
 		else {
 			head = tail = newNode;
 		}
+		_size++;
+	}
+
+	void pop_back() {		
+		if (head != tail) {
+			tail = tail->prev;
+			tail->next = nullptr;
+		}
+		else {
+			head = tail = nullptr;
+		}
+		_size--;
+	}
+
+	size_t size() const {
+		return _size;
 	}
 
 	void print() const {

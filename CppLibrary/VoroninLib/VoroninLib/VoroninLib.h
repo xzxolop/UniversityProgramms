@@ -284,7 +284,12 @@ public:
 		std::cout << std::endl;
 	}
 
-	~List() {}
+	~List() {
+		while (tail != head)
+		{
+			this->pop_back();
+		}
+	}
 };
 
 #endif VORONIN_LIB_H_

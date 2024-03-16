@@ -55,6 +55,8 @@ void print(const std::initializer_list<std::variant<int, double, std::string, ch
 template<typename T>
 class myvector {
 public:
+	myvector() = default;
+
 	myvector(int sz) : size(sz) {
 		data = new T[size];
 		for (int i = 0; i < size; i++) {
@@ -93,8 +95,6 @@ public:
 		std::swap(size, v.size);
 
 	}
-
-	myvector() = default;
 
 	myvector(myvector&& v) : myvector() {
 		swap(v);
@@ -179,7 +179,6 @@ public:
 		}
 	}
 
-
 	void to_binary(int decNumb) {
 		int i = 0;
 		number.resize(0);
@@ -202,7 +201,7 @@ public:
 		}
 	}
 
-	int size() const {
+	size_t size() const {
 		return number.size();
 	}
 
@@ -230,7 +229,7 @@ private:
 	size_t _size;
 
 public:
-	List() : head(nullptr), tail(nullptr), _size(0) {}
+	List() = default;
 
 	List(const List& other) {}
 
@@ -243,6 +242,13 @@ public:
 	List(const std::initializer_list<T>& il) {
 		for (auto x : il) {
 			push_back(x);
+		}
+	}
+
+	List(int size): List() {
+		while (size > 0) {
+			push_back(T());
+			size--;
 		}
 	}
 
@@ -260,11 +266,10 @@ public:
 
 	void pop_back() {		
 		if (head != tail) {
+			node* temp = tail;
 			tail = tail->prev;
 			tail->next = nullptr;
-		}
-		else {
-			head = tail = nullptr;
+			delete temp;
 		}
 
 		_size == 0 ? 0 : _size--;
@@ -282,13 +287,15 @@ public:
 			n = n->next;
 		}
 		std::cout << std::endl;
+		delete n; // when n exit the while, it will be = nullptr
 	}
 
 	~List() {
-		while (tail != head)
+		while (head != tail)
 		{
 			this->pop_back();
 		}
+		delete head;
 	}
 };
 

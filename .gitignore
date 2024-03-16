@@ -9,3 +9,4 @@
 /CppLibrary/VoroninLib/VoroninLib/x64
 *.ipch
 /CppLibrary/VoroninLib/.vs
+/CppLibrary/VoroninLib/enc_temp_folder

@@ -275,8 +275,12 @@ public:
 		_size == 0 ? 0 : _size--;
 	}
 
-	size_t size() const {
+	size_t size() const noexcept {
 		return _size;
+	}
+
+	bool is_empty() const noexcept {
+		return _size == 0;
 	}
 
 	void print() const {
@@ -287,7 +291,6 @@ public:
 			n = n->next;
 		}
 		std::cout << std::endl;
-		delete n; // when n exit the while, it will be = nullptr
 	}
 
 	~List() {

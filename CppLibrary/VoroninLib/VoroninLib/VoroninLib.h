@@ -266,7 +266,8 @@ public:
 		else {
 			head = tail = nullptr;
 		}
-		_size--;
+
+		_size == 0 ? 0 : _size--;
 	}
 
 	size_t size() const {

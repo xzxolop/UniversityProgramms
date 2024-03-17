@@ -265,14 +265,15 @@ public:
 	}
 
 	void pop_back() {		
-		if (head != tail) {
-			node* temp = tail;
-			tail = tail->prev;
+		node* temp = tail;
+		tail = tail->prev;
+		if (tail != nullptr) {
 			tail->next = nullptr;
-			delete temp;
 		}
-
-		_size == 0 ? 0 : _size--;
+		else
+			head = nullptr;
+		delete temp;
+		_size--;
 	}
 
 	size_t size() const noexcept {
@@ -294,11 +295,10 @@ public:
 	}
 
 	~List() {
-		while (head != tail)
+		while (head!=nullptr)
 		{
 			this->pop_back();
 		}
-		delete head;
 	}
 };
 

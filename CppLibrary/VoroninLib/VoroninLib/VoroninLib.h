@@ -284,6 +284,12 @@ public:
 		return _size == 0;
 	}
 
+	void clear() noexcept {
+		while (!is_empty()) {
+			this->pop_back();
+		}
+	}
+
 	void print() const {
 		node* n = head;
 		while (n != nullptr)
@@ -295,10 +301,7 @@ public:
 	}
 
 	~List() {
-		while (head!=nullptr)
-		{
-			this->pop_back();
-		}
+		clear();
 	}
 };
 

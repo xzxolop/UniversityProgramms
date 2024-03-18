@@ -1,0 +1,95 @@
+{VERSION 6 0 "IBM INTEL NT" "6.0" }
+{USTYLETAB {CSTYLE "Maple Input" -1 0 "Courier" 0 1 255 0 0 1 0 1 0 0 
+1 0 0 0 0 1 }{CSTYLE "2D Math" -1 2 "Times" 0 1 0 0 0 0 0 0 2 0 0 0 0 
+0 0 1 }{CSTYLE "2D Output" 2 20 "" 0 1 0 0 255 1 0 0 0 0 0 0 0 0 0 1 }
+{PSTYLE "Normal" -1 0 1 {CSTYLE "" -1 -1 "Times" 1 12 0 0 0 1 2 2 2 2 
+2 2 1 1 1 1 }1 1 0 0 0 0 1 0 1 0 2 2 0 1 }{PSTYLE "Maple Output" -1 
+11 1 {CSTYLE "" -1 -1 "Times" 1 12 0 0 0 1 2 2 2 2 2 2 1 1 1 1 }3 3 0 
+0 0 0 1 0 1 0 2 2 0 1 }{PSTYLE "Maple Output" -1 12 1 {CSTYLE "" -1 
+-1 "Times" 1 12 0 0 0 1 2 2 2 2 2 2 1 1 1 1 }1 3 0 0 0 0 1 0 1 0 2 2 
+0 1 }{PSTYLE "Maple Plot" -1 13 1 {CSTYLE "" -1 -1 "Times" 1 12 0 0 0 
+1 2 2 2 2 2 2 1 1 1 1 }3 1 0 0 0 0 1 0 1 0 2 2 0 1 }}
+{SECT 0 {EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 328 "restart;\nn:=17; le
+ft:=1; right:=17;\nh:=(right-left)/(n-1);\nXold:= array(1..n):\n\nfor \+
+i from 1 to n do Xold[i]:= i; end do:\nYold:= array(1..n, [17.0707, 17
+.4096, 17.6237, 17.6279, 17.4087,17.3373,17.3373,17.3373,17.3733,17.39
+12,17.3667,17.3156,17.3111,17.3111,17.3111,17.2996,17.4263]):\nprint(
+\"X\" = evalm(Xold), \"Y\"= evalm(Yold));" }}{PARA 11 "" 1 "" 
+{XPPMATH 20 "6#>%\"nG\"#<" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#>%%leftG
+\"\"\"" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#>%&rightG\"#<" }}{PARA 11 "
+" 1 "" {XPPMATH 20 "6#>%\"hG\"\"\"" }}{PARA 11 "" 1 "" {XPPMATH 20 "6$
+/Q\"X6\"K%'vectorG6#73\"\"\"\"\"#\"\"$\"\"%\"\"&\"\"'\"\"(\"\")\"\"*\"
+#5\"#6\"#7\"#8\"#9\"#:\"#;\"#<Q(pprint0F%/Q\"YF%KF'6#73$\"'22<!\"%$\"'
+'4u\"FC$\"'Pi<FC$\"'zi<FC$\"'(3u\"FC$\"'tL<FCFLFL$\"'LP<FC$\"'7R<FC$\"
+'nO<FC$\"'cJ<FC$\"'6J<FCFVFV$\"''*H<FC$\"'jU<FCQ(pprint1F%" }}}{EXCHG 
+{PARA 0 "> " 0 "" {MPLTEXT 1 0 437 "for i from 1 to n do Xnew[i]:=ln(X
+old[i]); Ynew[i]:=evalf(ln(Yold[i])): end do:\n\nMNK:=proc(n, Xnew, Yn
+ew)\nlocal SumX, SumY, SumXX, SumXY, i, A, B;\nSumX:=0; SumY:=0; SumXX
+:=0; SumXY:=0;\nfor i from 1 to n do\nSumX:=SumX+Xnew[i]: SumY:=SumY+Y
+new[i]; SumXX:=SumXX + (Xnew[i]^2); SumXY:= SumXY + (Xnew[i]*Ynew[i]);
+\nend do:\nA:= evalf((n * SumXY - SumX * SumY)/ (n * SumXX - SumX * Su
+mX)); \nB:= evalf((SumY - A*SumX) / n);\nreturn A, B;\nend proc;" }}
+{PARA 12 "" 1 "" {XPPMATH 20 "6#>%$MNKGf*6%%\"nG%%XnewG%%YnewG6)%%SumX
+G%%SumYG%&SumXXG%&SumXYG%\"iG%\"AG%\"BG6\"F2C*>8$\"\"!>8%F6>8&F6>8'F6?
+(8(\"\"\"F?9$%%trueGC&>F5,&F5F?&9%6#F>F?>F8,&F8F?&9&FGF?>F:,&F:F?*$)FE
+\"\"#F?F?>F<,&F<F?*&FEF?FJF?F?>8)-%&evalfG6#*&,&*&F@F?F<F?F?*&F5F?F8F?
+!\"\"F?,&*&F@F?F:F?F?*&F5F?F5F?FgnFgn>8*-FW6#*&,&F8F?*&FUF?F5F?FgnF?F@
+FgnO6$FUF\\oF2F2F2" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 61 "A, B:
+= MNK(n, Xnew, Ynew);\nF:=(x)->evalf(exp(B)*(x^A));\nF(x);" }}{PARA 
+11 "" 1 "" {XPPMATH 20 "6#>6$%\"AG%\"BG6$$\"+)ft;V*!#9$\"+%zFW&G!\"*" 
+}}{PARA 11 "" 1 "" {XPPMATH 20 "6#>%\"FGf*6#%\"xG6\"6$%)operatorG%&arr
+owGF(-%&evalfG6#*&-%$expG6#%\"BG\"\"\")9$%\"AGF4F(F(F(" }}{PARA 11 "" 
+1 "" {XPPMATH 20 "6#,$*&$\"+H)\\kt\"!\")\"\"\")%\"xG$\"+)ft;V*!#9F(F(
+" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 106 "sigma:=0:\nfor i from \+
+1 to n do\nsigma:=evalf(sigma+(F(Xold[i])-Yold[i])^2);\nend do:\nprint
+(\"sigma\" = sigma);" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#/Q&sigma6\"$\"
++wZO'[#!#5" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 162 "xy:=zip((x,y
+)->[x,y],convert(Xold,list),convert(Yold,list));\nwith(plots):\ngr1:=p
+lot(xy, color=blue):\ngr2:=plot(F(x), x=left..right, color=red):\ndisp
+lay(gr1, gr2);" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#>%#xyG737$\"\"\"$\"'
+22<!\"%7$\"\"#$\"''4u\"F*7$\"\"$$\"'Pi<F*7$\"\"%$\"'zi<F*7$\"\"&$\"'(3
+u\"F*7$\"\"'$\"'tL<F*7$\"\"(F=7$\"\")F=7$\"\"*$\"'LP<F*7$\"#5$\"'7R<F*
+7$\"#6$\"'nO<F*7$\"#7$\"'cJ<F*7$\"#8$\"'6J<F*7$\"#9FU7$\"#:FU7$\"#;$\"
+''*H<F*7$\"#<$\"'jU<F*" }}{PARA 13 "" 1 "" {GLPLOT2D 872 872 872 
+{PLOTDATA 2 "6&-%'CURVESG6$737$$\"\"\"\"\"!$\"3()*********pqq\"!#;7$$
+\"\"#F*$\"36+++++'4u\"F-7$$\"\"$F*$\"3'**********pBw\"F-7$$\"\"%F*$\"3
+/+++++zi<F-7$$\"\"&F*$\"3(**********p3u\"F-7$$\"\"'F*$\"3\"**********H
+Pt\"F-7$$\"\"(F*FE7$$\"\")F*FE7$$\"\"*F*$\"3/+++++LP<F-7$$\"#5F*$\"39+
+++++7R<F-7$$\"#6F*$\"3;+++++nO<F-7$$\"#7F*$\"3***********f:t\"F-7$$\"#
+8F*$\"3(**********46t\"F-7$$\"#9F*F^o7$$\"#:F*F^o7$$\"#;F*$\"3<+++++'*
+H<F-7$$\"#<F*$\"38+++++jU<F--%'COLOURG6&%$RGBG$F*F*Fdp$\"*++++\"!\")-F
+$6$7U7$F($\"3.+++H)\\kt\"F-7$$\"3KLLLLsPu6!#<$\"3'=4qU:wkt\"F-7$$\"3mm
+mmmWv[8Faq$\"3)Q`K&G))\\O<F-7$$\"3++++l\"z/]\"Faq$\"3I^x9)G;lt\"F-7$$
+\"3OLLLjQ?_;Faq$\"3(3!pmk?`O<F-7$$\"3mmmmYWY$*>Faq$\"32!)>o<GcO<F-7$$
+\"3jmmmEr)pL#Faq$\"31Rc6e))eO<F-7$$\"3%HLLL5x)yEFaq$\"3`e>F@7hO<F-7$$
+\"3cmmmwG&e*HFaq$\"3LMdPQ&Hmt\"F-7$$\"3v******HH1CLFaq$\"3rk^@mlkO<F-7
+$$\"3SmmmO#)\\jOFaq$\"3Tu@<#\\imt\"F-7$$\"3h******p\\%=+%Faq$\"3+$>5:'
+pnO<F-7$$\"3aLLLth()\\VFaq$\"3U1D'4i!pO<F-7$$\"3smmmYAUcYFaq$\"3ThArv<
+qO<F-7$$\"3p******>0_,]Faq$\"3HAic'[8nt\"F-7$$\"3!********zN![`Faq$\"3
+%y46#fWsO<F-7$$\"3'*******zu'>o&Faq$\"38#)QW!QMnt\"F-7$$\"3gmmmO%4_)fF
+aq$\"3NAn?(*GuO<F-7$$\"37LLL`MzXjFaq$\"3QWd*)zCvO<F-7$$\"3#GLLLTb7l'Fa
+q$\"3N&)p%4=gnt\"F-7$$\"3g*******G!e1qFaq$\"3v8]31(ont\"F-7$$\"3eKLL8I
+5@tFaq$\"3#*f@/**exO<F-7$$\"3M+++!H%=mwFaq$\"3Q[PoVMyO<F-7$$\"35+++qKy
+%*zFaq$\"3:(HY(=.zO<F-7$$\"3kKLLL=kP$)Faq$\"3/r%os>(zO<F-7$$\"3ELLLBI
+\\_')Faq$\"3TZ**>pK!ot\"F-7$$\"3_mmmmD5#**)Faq$\"3Tn?vv&4ot\"F-7$$\"3N
+lmmO9'[M*Faq$\"31ki;ze\"ot\"F-7$$\"3=******p!R>l*Faq$\"3C6;av6#ot\"F-7
+$$\"3#emmmK\"f$)**Faq$\"3Uf&e(4n#ot\"F-7$$\"3&******f0AE.\"F-$\"3?ikMP
+A$ot\"F-7$$\"3%)*****>kTh1\"F-$\"3hu$H.ZPot\"F-7$$\"3))*****\\ct&)4\"F
+-$\"3Vsd@zB%ot\"F-7$$\"3')*****fo$eM6F-$\"3'ePGFmZot\"F-7$$\"3ALLL\"QS
+p;\"F-$\"3!30$4pA&ot\"F-7$$\"3(*******f!)[,7F-$\"3,mRZ[q&ot\"F-7$$\"3g
+mmm\"R$zK7F-$\"3.'p)3i7'ot\"F-7$$\"3)******zQ=qE\"F-$\"3+[!pzulot\"F-7
+$$\"3;LLLU9A*H\"F-$\"3:jLaf)pot\"F-7$$\"3\"******H\"H)GL\"F-$\"3wMhz\\
+S(ot\"F-7$$\"3GLLL`Jzl8F-$\"3%)yUYX!yot\"F-7$$\"3$******\\7Z-S\"F-$\"3
+%\\f,n7#)ot\"F-7$$\"3rmmm%RIMV\"F-$\"3C[8ejf)ot\"F-7$$\"3immm!3ltY\"F-
+$\"3**4gc'z*)ot\"F-7$$\"3JLLLq(=5]\"F-$\"3BTsD6N*ot\"F-7$$\"3'******f,
+V>`\"F-$\"3TNN(>&o*ot\"F-7$$\"3KLLL\"p&Qn:F-$\"3\\5W'))f+pt\"F-7$$\"3g
+mmmUg3*f\"F-$\"3x!3S!zQ!pt\"F-7$$\"3/+++H_)Gj\"F-$\"3I)yIbI2pt\"F-7$$
+\"3/+++j`Bl;F-$\"3s?SL>0\"pt\"F-7$F\\p$\"3e0V9/R\"pt\"F--Fap6&FcpFepFd
+pFdp-%+AXESLABELSG6%Q!6\"F\\al-%%FONTG6#%(DEFAULTG-%%VIEWG6$;F(F\\pFaa
+l" 1 2 0 1 10 0 2 9 1 4 2 1.000000 45.000000 45.000000 0 0 "Curve 1" "
+Curve 2" }}}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 12 "# \313\350\355
+\345\351\355\340\352\377 " }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 0 
+"" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 0 "" }}}{EXCHG {PARA 0 "> \+
+" 0 "" {MPLTEXT 1 0 0 "" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 0 "
+" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 0 "" }}}}{MARK "0 0 0" 59 }
+{VIEWOPTS 1 1 0 1 1 1803 1 1 1 1 }{PAGENUMBERS 0 1 2 33 1 1 }

@@ -1,4 +1,4 @@
-#ifndef VORONIN_LIB_H_
+﻿#ifndef VORONIN_LIB_H_
 #define VORONIN_LIB_H_
 
 #include <functional>
@@ -183,7 +183,7 @@ public:
 		int i = 0;
 		number.resize(0);
 		while (decNumb > 0) {
-			number.push_back((decNumb % 2) + '0'); // '0' ��� ����� �����
+			number.push_back((decNumb % 2) + '0'); // '0' тут очень важен
 			decNumb /= 2;
 			i++;
 		}
@@ -213,6 +213,17 @@ private:
 	std::vector<char> number;
 };
 
+// класс входного итератора
+template <typename T>
+class IInIt {
+public:
+	virtual T operator*() = 0;
+	virtual void operator++() = 0;
+	friend virtual bool operator==(IInIt i1, IInIt i2) = 0;
+	friend virtual bool operator!=(IInIt i1, IInIt i2) = 0;
+	virtual ~IInIt() {}
+};
+
 // List with two fictive nodes
 template<typename T>
 class List {
@@ -221,13 +232,32 @@ private:
 		T data;
 		node* next;
 		node* prev;
-		node(T d) : data(d), next(nullptr), prev(nullptr) {}
 		node(T d, node* p, node* n) : data(d), prev(p), next(n) {}
 	};
 
-	node* head, * tail; // in standart realisation of microsoft and gcc list zakolcovan
-	size_t _size;
+	class iterator: {
+	public:
+		iterator(node* pp) : p(pp) {}
+		T operator*() { return p->data; }
+		void operator++() {
+			p = p->next;
+		}
 
+		friend bool operator==(iterator& iter1, iterator& iter2) {
+			return iter1->data == iter2->data;
+		}
+
+		friend bool operator!=(iterator& iter1, iterator& iter2) {
+			return !(iter1 == iter2);
+		}
+
+	private:
+		node* p;
+	};
+
+	node *head, *tail; // in standart realisation of microsoft and gcc list zakolcovan
+	size_t _size;
+	
 public:
 	List() = default;
 
@@ -285,7 +315,7 @@ public:
 	}
 
 	void clear() noexcept {
-		while (!is_empty()) {
+		while (!is_empty()) { // не будет ли потери производительности из-за вызова функций?
 			this->pop_back();
 		}
 	}
@@ -298,6 +328,14 @@ public:
 			n = n->next;
 		}
 		std::cout << std::endl;
+	}
+
+	iterator begin() {
+		return iterator(head);
+	}
+
+	iterator end() {
+		return iterator(tail->next);
 	}
 
 	~List() {

@@ -273,7 +273,7 @@ public:
 		}
 	}
 
-	List(int size): List() {
+	explicit List(int size): List() {
 		while (size > 0) {
 			push_back(T());
 			size--;

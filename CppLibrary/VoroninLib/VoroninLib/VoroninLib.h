@@ -213,17 +213,6 @@ private:
 	std::vector<char> number;
 };
 
-// класс входного итератора
-template <typename T>
-class IInIt {
-public:
-	virtual T operator*() = 0;
-	virtual void operator++() = 0;
-	friend virtual bool operator==(IInIt i1, IInIt i2) = 0;
-	friend virtual bool operator!=(IInIt i1, IInIt i2) = 0;
-	virtual ~IInIt() {}
-};
-
 // List with two fictive nodes
 template<typename T>
 class List {
@@ -235,12 +224,21 @@ private:
 		node(T d, node* p, node* n) : data(d), prev(p), next(n) {}
 	};
 
-	class iterator: {
+	class iterator {
 	public:
 		iterator(node* pp) : p(pp) {}
+
 		T operator*() { return p->data; }
-		void operator++() {
+
+		iterator& operator++() {
 			p = p->next;
+			return *this;
+		}
+
+		iterator operator++(int) {
+			iterator it = *this; // нужно передавать по значению, т.к. иначе будет ссылка, и мы вернём уже увеличенный it (нарушается идея, постфиксного инкремента)
+			p = p->next;
+			return it;
 		}
 
 		friend bool operator==(iterator& iter1, iterator& iter2) {

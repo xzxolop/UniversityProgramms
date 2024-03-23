@@ -4,8 +4,13 @@
 int main() {
 	
 	List<int> l{1, 2, 3, 4};
+	auto it = l.begin();
+	auto g = it++;
+	
+	std::cout << *it++ << std::endl;
 
-	std::cout << *l.begin() << std::endl;
+	
+
 
 	return 0;
 }

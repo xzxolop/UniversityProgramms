@@ -3,11 +3,15 @@
 
 int main() {
 	
-	List<int> l{1, 2, 3, 4};
-	auto it = l.begin();
-	auto g = it++;
+	List<int> l;
+	l.push_front(8);
+	l.push_front(3);
+	l.print();
+	l.pop_front();
+	l.pop_front();
+	l.pop_front();
+	l.print();
 	
-	std::cout << *it++ << std::endl;
 
 	
 

@@ -235,7 +235,7 @@ private:
 			return *this;
 		}
 
-		iterator operator++(int) {
+		iterator operator++(int) { // тут нельзя вернуть ссылку из-за удаления it, и сслыка станет битой
 			iterator it = *this; // нужно передавать по значению, т.к. иначе будет ссылка, и мы вернём уже увеличенный it (нарушается идея, постфиксного инкремента)
 			p = p->next;
 			return it;
@@ -303,6 +303,31 @@ public:
 		delete temp;
 		_size--;
 	}
+
+	void push_front(T elem) {
+		node* newNode = new node(elem, nullptr, head);
+		if (head != nullptr) {
+			head->prev = newNode;
+			head = head->prev;
+		}
+		else {
+			head = tail = newNode;
+		}
+		_size++;
+	}
+
+	/*void pop_front() {
+		node* temp = head;
+		head = head->next;
+		if (head != nullptr) {
+			head->next = nullptr;
+		}
+		else {
+			tail = nullptr;
+		}
+		delete temp;
+		_size--;
+	}*/
 
 	size_t size() const noexcept {
 		return _size;

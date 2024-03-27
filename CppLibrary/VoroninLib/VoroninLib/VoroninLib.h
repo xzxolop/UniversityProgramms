@@ -242,7 +242,7 @@ private:
 		}
 
 		friend bool operator==(iterator& iter1, iterator& iter2) {
-			return iter1->data == iter2->data;
+			return iter1.p == iter2.p;
 		}
 
 		friend bool operator!=(iterator& iter1, iterator& iter2) {
@@ -259,7 +259,7 @@ private:
 public:
 	List() = default;
 
-	List(const List& other) {}
+	List(const List& other) : List(other.begin(), other.end()) {}
 
 	List(List&& other) : head(other.head), tail(other.head), _size(other.head) {
 		other.head = nullptr;
@@ -277,6 +277,14 @@ public:
 		while (size > 0) {
 			push_back(T());
 			size--;
+		}
+	}
+
+	template<typename iter>
+	List(iter begin, iter end) : List() {
+		while (begin != end) {
+			push_back(*begin);
+			++begin;
 		}
 	}
 

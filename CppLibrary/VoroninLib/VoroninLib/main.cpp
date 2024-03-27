@@ -1,18 +1,13 @@
 #include "VoroninLib.h"
 #include <iostream>
+#include <vector>
 
 int main() {
 	
-	List<int> l;
-	l.push_front(8);
-	l.push_front(3);
+	List<int> l {1, 2, 3, 4,6};
 	l.print();
-	l.pop_front();
-	l.pop_front();
-	l.pop_front();
-	l.print();
-	
-
+	List<int> l2(l.begin(), l.end());
+	l2.print();
 	
 
 

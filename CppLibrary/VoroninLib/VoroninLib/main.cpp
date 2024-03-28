@@ -4,11 +4,15 @@
 
 int main() {
 	
-	List<int> l {1, 2, 3, 4,6};
+	List<int> l{1, 2};
 	l.print();
-	List<int> l2(l.begin(), l.end());
-	l2.print();
-	
+	l.pop_front();
+	l.print();
+	l.pop_front();
+	l.print();
+	l.push_back(10);
+	l.push_back(20);
+	l.print();
 
 
 	return 0;

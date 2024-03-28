@@ -300,7 +300,8 @@ public:
 		_size++;
 	}
 
-	void pop_back() {		
+	void pop_back() {
+		if (tail == nullptr) return; 
 		node* temp = tail;
 		tail = tail->prev;
 		if (tail != nullptr) {
@@ -324,18 +325,19 @@ public:
 		_size++;
 	}
 
-	/*void pop_front() {
+	void pop_front() {
+		if (head == nullptr) return; 
 		node* temp = head;
 		head = head->next;
 		if (head != nullptr) {
-			head->next = nullptr;
+			head->prev = nullptr;
 		}
 		else {
 			tail = nullptr;
 		}
 		delete temp;
 		_size--;
-	}*/
+	}
 
 	size_t size() const noexcept {
 		return _size;

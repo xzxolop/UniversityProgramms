@@ -194,7 +194,7 @@ public:
 			std::cout << "empty" << std::endl;
 		}
 		else {
-			for (int i = number.size() - 1; i >= 0; i--) {
+			for (size_t i = number.size() - 1; i >= 0; i--) {
 				std::cout << number[i];
 			}
 			std::cout << std::endl;
@@ -257,7 +257,12 @@ private:
 	size_t _size;
 	
 public:
-	List() = default;
+	//List() = default;
+	List() {
+		head = nullptr;
+		tail = nullptr;
+		_size = 0;
+	}
 
 	List(const List& other) : List(other.begin(), other.end()) {}
 
@@ -369,6 +374,19 @@ public:
 
 	iterator end() {
 		return iterator(tail->next);
+	}
+
+	T& operator[](int n) {
+		if (n + 1 > _size) {
+			throw std::invalid_argument("Index out of range");
+		}
+		node* elem = head;
+		while (n > 0) {
+			elem = elem->next;
+			n--;
+		}
+		
+		return elem->data;
 	}
 
 	~List() {

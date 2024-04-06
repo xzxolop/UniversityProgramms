@@ -226,6 +226,12 @@ private:
 
 	class iterator {
 	public:
+		using value_type = T;
+		using iterator_category = std::input_iterator_tag;
+		using pointer = value_type*;
+		using reference = value_type&;
+		using difference_type = std::ptrdiff_t;
+
 		iterator(node* pp) : p(pp) {}
 
 		T operator*() { return p->data; }
@@ -255,7 +261,7 @@ private:
 
 	node *head, *tail; // in standart realisation of microsoft and gcc list zakolcovan
 	size_t _size;
-	
+
 public:
 	//List() = default;
 	List() {

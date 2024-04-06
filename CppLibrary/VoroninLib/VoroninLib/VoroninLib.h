@@ -261,6 +261,43 @@ private:
 
 	node *head, *tail; // in standart realisation of microsoft and gcc list zakolcovan
 	size_t _size;
+	Allocator Alloc;
+
+	node* create_fictive_node() {
+		// Выделение памяти
+		node* new_fictive_node = Alloc.allocate(1);
+
+		// Инициализация полей кроме data
+		// С помощью аллокатора Alloc создаёт по адрессу new_fictive_node->prev (а это node), а затем передаём конструктор объект fictive_node
+		std::allocator_traits<Allocator>::construct(Alloc, &(new_fictive_node->prev), new_fictive_node);
+		std::allocator_traits<Allocator>::construct(Alloc, &(new_fictive_node->next), new_fictive_node);
+		return new_fictive_node;
+	}
+
+	node* create_node(const T& elem, node* prev, node* next) {
+		return create_node(std::move(T(elem)), prev, next); // переиспользование кода
+	}
+
+	// Для типа elem из тестов
+	node* create_node(const T&& elem, node* prev, node* next) { // для чего тут prev/next?
+		node* node = create_fictive_node();
+
+		std::allocator_traits<Allocator>::construct(Alloc, &(fictive_node->data), std::move(elem));
+		return node;
+	}
+
+	void delete_fictive_node(node* fictive_node) {
+		std::allocator_traits<Allocator>::destroy(Alc, &(fictive_node->prev));
+		std::allocator_traits<Allocator>::destroy(Alc, &(fictive_node->next));
+		std::allocator_traits<Allocator>::deallocate(Alc, fictive_node, 1);
+	}
+
+	void delete_node(node* node) {
+		std::allocator_traits<Allocator>::destroy(Alc, &(node->data));
+		delete_fictive_node(node);
+	}
+
+
 
 public:
 	//List() = default;
@@ -391,7 +428,7 @@ public:
 			elem = elem->next;
 			n--;
 		}
-		
+		  
 		return elem->data;
 	}
 

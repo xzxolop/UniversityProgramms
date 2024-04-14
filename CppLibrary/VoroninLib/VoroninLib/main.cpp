@@ -4,10 +4,12 @@
 
 int main() {
 	
-	List<int> l{1, 2};
-	
-	l[1] = 10;
+	List<int> l;
+	//l.print();
+	l.push_back(8);
 	l.print();
+	
+	//l.print();
 
 
 	return 0;

@@ -213,8 +213,8 @@ private:
 	std::vector<char> number;
 };
 
-// List with two fictive nodes
-template<typename T>
+// List with fictive node
+template<typename T, typename Allocator = std::allocator<T>>
 class List {
 private:
 	struct node {
@@ -259,9 +259,11 @@ private:
 		node* p;
 	};
 
-	node *head, *tail; // in standart realisation of microsoft and gcc list zakolcovan
+	node* fictive_node; // in standart realisation of microsoft and gcc list zakolcovan
 	size_t _size;
-	Allocator Alloc;
+
+	using AllocType = typename std::allocator_traits<Allocator>::template rebind_alloc<node>;
+	AllocType Alloc;
 
 	node* create_fictive_node() {
 		// Выделение памяти
@@ -269,8 +271,8 @@ private:
 
 		// Инициализация полей кроме data
 		// С помощью аллокатора Alloc создаёт по адрессу new_fictive_node->prev (а это node), а затем передаём конструктор объект fictive_node
-		std::allocator_traits<Allocator>::construct(Alloc, &(new_fictive_node->prev), new_fictive_node);
-		std::allocator_traits<Allocator>::construct(Alloc, &(new_fictive_node->next), new_fictive_node);
+		std::allocator_traits<AllocType>::construct(Alloc, &(new_fictive_node->prev), new_fictive_node);
+		std::allocator_traits<AllocType>::construct(Alloc, &(new_fictive_node->next), new_fictive_node);
 		return new_fictive_node;
 	}
 
@@ -280,20 +282,22 @@ private:
 
 	// Для типа elem из тестов
 	node* create_node(const T&& elem, node* prev, node* next) { // для чего тут prev/next?
-		node* node = create_fictive_node();
+		node* node = Alloc.allocate(1);
 
-		std::allocator_traits<Allocator>::construct(Alloc, &(fictive_node->data), std::move(elem));
+		std::allocator_traits<AllocType>::construct(Alloc, &(node->prev), prev);
+		std::allocator_traits<AllocType>::construct(Alloc, &(node->next), next);
+		std::allocator_traits<AllocType>::construct(Alloc, &(node->data), std::move(elem));
 		return node;
 	}
 
 	void delete_fictive_node(node* fictive_node) {
-		std::allocator_traits<Allocator>::destroy(Alc, &(fictive_node->prev));
-		std::allocator_traits<Allocator>::destroy(Alc, &(fictive_node->next));
-		std::allocator_traits<Allocator>::deallocate(Alc, fictive_node, 1);
+		std::allocator_traits<AllocType>::destroy(Alloc, &(fictive_node->prev));
+		std::allocator_traits<AllocType>::destroy(Alloc, &(fictive_node->next));
+		std::allocator_traits<AllocType>::deallocate(Alloc, fictive_node, 1);
 	}
 
 	void delete_node(node* node) {
-		std::allocator_traits<Allocator>::destroy(Alc, &(node->data));
+		std::allocator_traits<AllocType>::destroy(Alloc, &(node->data));
 		delete_fictive_node(node);
 	}
 
@@ -301,17 +305,13 @@ private:
 
 public:
 	//List() = default;
-	List() {
-		head = nullptr;
-		tail = nullptr;
-		_size = 0;
-	}
+	List() : fictive_node(create_fictive_node()), _size(0) {};
 
-	List(const List& other) : List(other.begin(), other.end()) {}
+	List(const List& other) : List(other.begin(), other.end()) {};
 
-	List(List&& other) : head(other.head), tail(other.head), _size(other.head) {
-		other.head = nullptr;
-		other.tail = nullptr;
+	List(List&& other) : fictive_node(other.fictive_node), _size(other.head) {
+		other.fictive_node = nullptr;
+		std::swap(Alloc, other.Alloc);
 		other._size = 0;
 	}
 
@@ -337,31 +337,26 @@ public:
 	}
 
 	void push_back(const T& value) {
-		node* newNode = new node(value, tail, nullptr);
-		if (tail != nullptr) {
-			tail->next = newNode;
-			tail = newNode;
-		}
-		else {
-			head = tail = newNode;
-		}
+		push_back(std::move(T(value)));
+	}
+
+	void push_back(const T&& value) {
+		node* newNode = create_node(std::move(value), fictive_node->prev, fictive_node);
+		fictive_node->prev->next = newNode; // перепресваивание указателя с фиктивной вершины на новый эл-ет.
+		fictive_node->prev = newNode;
 		_size++;
 	}
 
 	void pop_back() {
-		if (tail == nullptr) return; 
-		node* temp = tail;
-		tail = tail->prev;
-		if (tail != nullptr) {
-			tail->next = nullptr;
-		}
-		else
-			head = nullptr;
-		delete temp;
+		if (is_empty()) throw new std::out_of_range("list is empty");
+		node* temp = fictive_node->prev;
+		temp->prev->next = temp->next;
+		temp->next->prev = temp->prev;
+		delete_node(temp);
 		_size--;
 	}
 
-	void push_front(T elem) {
+	/*void push_front(T elem) {
 		node* newNode = new node(elem, nullptr, head);
 		if (head != nullptr) {
 			head->prev = newNode;
@@ -385,7 +380,7 @@ public:
 		}
 		delete temp;
 		_size--;
-	}
+	}*/
 
 	size_t size() const noexcept {
 		return _size;
@@ -402,8 +397,8 @@ public:
 	}
 
 	void print() const {
-		node* n = head;
-		while (n != nullptr)
+		node* n = fictive_node->next;
+		while (n != fictive_node)
 		{
 			std::cout << n->data << ' ';
 			n = n->next;
@@ -412,18 +407,18 @@ public:
 	}
 
 	iterator begin() {
-		return iterator(head);
+		return iterator(fictive_node->next);
 	}
 
 	iterator end() {
-		return iterator(tail->next);
+		return iterator(fictive_node);
 	}
 
 	T& operator[](int n) {
 		if (n + 1 > _size) {
 			throw std::invalid_argument("Index out of range");
 		}
-		node* elem = head;
+		node* elem = fictive_node->next;
 		while (n > 0) {
 			elem = elem->next;
 			n--;
@@ -433,7 +428,10 @@ public:
 	}
 
 	~List() {
-		clear();
+		if (fictive_node != nullptr) {
+			clear();
+			delete_fictive_node(fictive_node);
+		}
 	}
 };
 

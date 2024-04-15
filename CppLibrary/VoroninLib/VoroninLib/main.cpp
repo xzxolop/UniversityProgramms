@@ -4,9 +4,10 @@
 
 int main() {
 	
-	List<int> l;
-	//l.print();
+	List<int> l{9, 10, 30};
+	l.print();
 	l.push_back(8);
+	l.push_back(80);
 	l.print();
 	
 	//l.print();

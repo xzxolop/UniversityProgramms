@@ -315,7 +315,7 @@ public:
 		other._size = 0;
 	}
 
-	List(const std::initializer_list<T>& il) {
+	List(const std::initializer_list<T>& il) : List() { // как оно раньше работало без :List()
 		for (auto x : il) {
 			push_back(x);
 		}

@@ -1,0 +1,101 @@
+{VERSION 6 0 "IBM INTEL NT" "6.0" }
+{USTYLETAB {CSTYLE "Maple Input" -1 0 "Courier" 1 12 255 0 0 1 2 1 2 
+2 1 2 0 0 0 1 }{CSTYLE "2D Output" -1 20 "Times" 1 12 0 0 255 1 2 2 2 
+2 2 2 0 0 0 1 }{PSTYLE "Normal" -1 0 1 {CSTYLE "" -1 -1 "Times" 1 12 
+0 0 0 1 2 2 2 2 2 2 1 1 1 1 }1 1 0 0 0 0 2 0 2 0 2 2 0 1 }{PSTYLE "Map
+le Output" -1 11 1 {CSTYLE "" -1 -1 "Times" 1 12 0 0 0 1 2 2 2 2 2 2 
+1 1 1 1 }3 1 0 0 0 0 2 0 2 0 2 2 0 1 }}
+{SECT 0 {EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 125 "restart;\nDigits :=
+ 16;\nF[1] := (x) -> evalf(2*x[1] + cos(x[2] - 9) - 17); \nF[2] := (x)
+ -> evalf(3*x[2] - sin(x[1] - 8) - 27);" }}{PARA 11 "" 1 "" {XPPMATH 
+20 "6#>%'DigitsG\"#;" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#>&%\"FG6#\"\"
+\"f*6#%\"xG6\"6$%)operatorG%&arrowGF+-%&evalfG6#,(*&\"\"#F'&9$F&F'F'-%
+$cosG6#,&&F66#F4F'\"\"*!\"\"F'\"#<F>F+F+F+" }}{PARA 11 "" 1 "" 
+{XPPMATH 20 "6#>&%\"FG6#\"\"#f*6#%\"xG6\"6$%)operatorG%&arrowGF+-%&eva
+lfG6#,(*&\"\"$\"\"\"&9$F&F5F5-%$sinG6#,&&F76#F5F5\"\")!\"\"F?\"#FF?F+F
++F+" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 95 "FI[1] := (x) -> eval
+f(17/2 - 1/2*cos(x[2] - 9)); \nFI[2] := (x) -> evalf(9 + 1/3*sin(x[1] \+
+- 8));" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#>&%#FIG6#\"\"\"f*6#%\"xG6\"6
+$%)operatorG%&arrowGF+-%&evalfG6#,&#\"#<\"\"#F'*&#F'F5F'-%$cosG6#,&&9$
+6#F5F'\"\"*!\"\"F'F@F+F+F+" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#>&%#FIG6
+#\"\"#f*6#%\"xG6\"6$%)operatorG%&arrowGF+-%&evalfG6#,&\"\"*\"\"\"*&#F4
+\"\"$F4-%$sinG6#,&&9$6#F4F4\"\")!\"\"F4F4F+F+F+" }}}{EXCHG {PARA 0 "> \+
+" 0 "" {MPLTEXT 1 0 40 "a := 7.5; b := 8.5; c := 8.5; d := 9.5;\n" }}
+{PARA 11 "" 1 "" {XPPMATH 20 "6#>%\"aG$\"#v!\"\"" }}{PARA 11 "" 1 "" 
+{XPPMATH 20 "6#>%\"bG$\"#&)!\"\"" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#>%
+\"cG$\"#&)!\"\"" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#>%\"dG$\"#&*!\"\"" 
+}}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 210 "with(plots):\ngr1 := imp
+licitplot(F[1](x), x[1]=a..b, x[2]=c..d, color=red):\ngr2 := implicitp
+lot(F[2](x), x[1]=a..b, x[2]=c..d, color=blue):\ndisplay(gr1, gr2);\n
+\n#\361\355\353\363 \350\354\345\345\362 \352\356\360\345\355\374 \342
+ \357\360\356\354\345\346\363\362\352\345 (8,8.2) \350 (9, 8.8)" }}}
+{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 476 "MyMPI := proc(x0_inp, eps, \+
+n, FF)\nlocal x0, norma, i, j, xnew, code,k;\nx0:=array(1..n);\nxnew:=
+array(1..n);\n\nfor k from 1 to n do x0[k]:=evalf(x0_inp[k]); od; \n\n
+norma:=1+eps; \ncode := -1;\nfor i from 1 to 15 while norma > eps do\n
+  for j from 1 to n do\n    xnew[j]:=FF[j](x0);\n  od;\n  norma:=max(a
+bs(xnew[1] - x0[1]), abs(xnew[2] - x0[2]));\nprint(i, evalm(xnew));\n \+
+ for j from 1 to n do x0[j]:=xnew[j]; od;\nod:\nif i < 16 then code :=
+ 0; fi;\nreturn i, evalm(xnew), code;\nend proc:" }}}{EXCHG {PARA 0 ">
+ " 0 "" {MPLTEXT 1 0 256 "# \312\356\360\345\355\374 \355\340\351\344
+\345\355\n\nx0:=array(1..2, [7,10]);\nres := MyMPI(x0, 0.001, 2, FI):
+\nif res[3] = 0 then\n   print(\"\312\356\360\345\355\374 \355\340\351
+\344\345\355:\",evalm(res[2]), \" \350\362\345\360\340\366\350\377: \"
+, res[1], \" F=\",F[1](res[2]), F[2](res[2]) );\nelse\n   print(\"\312
+\356\360\345\355\374 \355\345 \355\340\351\344\345\355:\", \", \350
+\362\345\360\340\366\350\377: \", res[1]);\nfi;" }}{PARA 0 "> " 0 "" 
+{MPLTEXT 1 0 0 "" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#>%#x0GK%'vectorG6#
+7$\"\"(\"#5Q(pprint06\"" }}{PARA 11 "" 1 "" {XPPMATH 20 "6$\"\"\"K%'ve
+ctorG6#7$$\"1837+/V2R!#:$\"1,2tr'4&>()F*Q(pprint06\"" }}{PARA 11 "" 1 
+"" {XPPMATH 20 "6$\"\"#K%'vectorG6#7$$\"08,q[:=K$!#:$\"1,Wb'zF8F*F*Q(p
+print06\"" }}{PARA 11 "" 1 "" {XPPMATH 20 "6$\"\"$K%'vectorG6#7$$\"04'
+zY+l4J!#:$\"1j&)*e7ECn)F*Q(pprint06\"" }}{PARA 11 "" 1 "" {XPPMATH 20 
+"6$\"\"%K%'vectorG6#7$$\"0$*\\c98)>X!#:$\"1'>W/'4>r')F*Q(pprint06\"" }
+}{PARA 11 "" 1 "" {XPPMATH 20 "6$\"\"&K%'vectorG6#7$$\"0)*f,VaOb%!#:$
+\"1qi;_v9#o)F*Q(pprint06\"" }}{PARA 11 "" 1 "" {XPPMATH 20 "6$\"\"'K%'
+vectorG6#7$$\"0I5v(RvdU!#:$\"1dk5^\"*[#o)F*Q(pprint06\"" }}{PARA 11 "
+" 1 "" {XPPMATH 20 "6$\"\"(K%'vectorG6#7$$\"0$\\$R<%o[U!#:$\"1&p+[\"ei
+z')F*Q(pprint06\"" }}{PARA 11 "" 1 "" {XPPMATH 20 "6$\"\")K%'vectorG6#
+7$$\"0WZT8+]K%!#:$\"1tnYnCaz')F*Q(pprint06\"" }}{PARA 11 "" 1 "" 
+{XPPMATH 20 "6$\"\"*K%'vectorG6#7$$\"0_4Z[JsK%!#:$\"1k?D#*>D!o)F*Q(ppr
+int06\"" }}{PARA 11 "" 1 "" {XPPMATH 20 "6)Q/|ew|iy|[z|`y|hy|gz~|hy|[y
+|dy|_y|`y|hy:6\"K%'vectorG6#7$$\"0_4Z[JsK%!#:$\"1k?D#*>D!o)F+Q(pprint0
+F$Q,~|cy|]z|`y|[z|[y|az|cy|jz:~F$\"#5Q$~F=F$$!1tyn/R_=:!#9$!+alr2jF4" 
+}}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 258 "# \312\356\360\345\355
+\374 \355\345 \355\340\351\344\345\355\nx0:=array(1..2, [1, 1]);\nres \+
+:= MyMPI(x0, 1E-12, 2, FI):\nif res[3] = 0 then\n   print(\"\312\356
+\360\345\355\374 \355\340\351\344\345\355:\",evalm(res[2]), \" \350
+\362\345\360\340\366\350\377: \", res[1], \" F=\",F[1](res[2]), F[2](r
+es[2]) );\nelse\n   print(\"\312\356\360\345\355\374 \355\345 \355\340
+\351\344\345\355:\", \", \350\362\345\360\340\366\350\377: \", res[1])
+;\nfi;" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#>%#x0GK%'vectorG6#7$\"\"\"F)
+Q(pprint06\"" }}{PARA 11 "" 1 "" {XPPMATH 20 "6$\"\"\"K%'vectorG6#7$$
+\"1:KP(G]nt*!#:$\"1PP4nW+\"y)F*Q(pprint06\"" }}{PARA 11 "" 1 "" 
+{XPPMATH 20 "6$\"\"#K%'vectorG6#7$$\"0B^mFE,.#!#:$\"1S.wQPvG$*F*Q(ppri
+nt06\"" }}{PARA 11 "" 1 "" {XPPMATH 20 "6$\"\"$K%'vectorG6#7$$\"0G4UmO
+@b%!#:$\"1!326\"z?n')F*Q(pprint06\"" }}{PARA 11 "" 1 "" {XPPMATH 20 "6
+$\"\"%K%'vectorG6#7$$\"0fsC[=Om%!#:$\"1C\"QEvtCo)F*Q(pprint06\"" }}
+{PARA 11 "" 1 "" {XPPMATH 20 "6$\"\"&K%'vectorG6#7$$\"03Dj\"G4\\U!#:$
+\"1#*RkGUi$o)F*Q(pprint06\"" }}{PARA 11 "" 1 "" {XPPMATH 20 "6$\"\"'K%
+'vectorG6#7$$\"0*=&yP9'=U!#:$\"1vB.<iaz')F*Q(pprint06\"" }}{PARA 11 "
+" 1 "" {XPPMATH 20 "6$\"\"(K%'vectorG6#7$$\"0*=R!4JrK%!#:$\"1!pwf-o#z'
+)F*Q(pprint06\"" }}{PARA 11 "" 1 "" {XPPMATH 20 "6$\"\")K%'vectorG6#7$
+$\"0#\\-8FeMV!#:$\"1\"\\H;2s-o)F*Q(pprint06\"" }}{PARA 11 "" 1 "" 
+{XPPMATH 20 "6$\"\"*K%'vectorG6#7$$\"0JK_v<xI%!#:$\"15iB+CM!o)F*Q(ppri
+nt06\"" }}{PARA 11 "" 1 "" {XPPMATH 20 "6$\"#5K%'vectorG6#7$$\"0'oMT!R
+eI%!#:$\"1g5#>o*3!o)F*Q(pprint06\"" }}{PARA 11 "" 1 "" {XPPMATH 20 "6$
+\"#6K%'vectorG6#7$$\"0Z?\"e=f7V!#:$\"12+C&4s+o)F*Q(pprint06\"" }}
+{PARA 11 "" 1 "" {XPPMATH 20 "6$\"#7K%'vectorG6#7$$\"05!zy>18V!#:$\"17
+*[6ON,o)F*Q(pprint06\"" }}{PARA 11 "" 1 "" {XPPMATH 20 "6$\"#8K%'vecto
+rG6#7$$\"0>XW*3P6V!#:$\"18[0r(R,o)F*Q(pprint06\"" }}{PARA 11 "" 1 "" 
+{XPPMATH 20 "6$\"#9K%'vectorG6#7$$\"0%\\jIID6V!#:$\"1<*f8\"R7!o)F*Q(pp
+rint06\"" }}{PARA 11 "" 1 "" {XPPMATH 20 "6$\"#:K%'vectorG6#7$$\"0YW4#
+pn6V!#:$\"1.\\K1G7!o)F*Q(pprint06\"" }}{PARA 11 "" 1 "" {XPPMATH 20 "6
+%Q2|ew|iy|[z|`y|hy|gz~|hy|`y~|hy|[y|dy|_y|`y|hy:6\"Q-,~|cy|]z|`y|[z|[y
+|az|cy|jz:~F$\"#;" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 0 "" }}}
+{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 0 "" }}}{EXCHG {PARA 0 "> " 0 "
+" {MPLTEXT 1 0 0 "" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 0 "" }}}
+{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 0 "" }}}{EXCHG {PARA 0 "> " 0 "
+" {MPLTEXT 1 0 0 "" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 0 "" }}}}
+{MARK "3 0 0" 0 }{VIEWOPTS 1 1 0 1 1 1803 1 1 1 1 }{PAGENUMBERS 0 1 2 
+33 1 1 }

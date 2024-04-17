@@ -229,6 +229,8 @@ private:
 	using pointer = value_type*;
 	using reference = value_type&;
 	using difference_type = std::ptrdiff_t;
+	using const_pointer = const pointer;
+	using const_reference = const reference;
 
 	template<typename Pointer, typename Reference>
 	class Iterator : public std::iterator<std::bidirectional_iterator_tag, value_type, difference_type, Pointer, Reference> {
@@ -274,6 +276,7 @@ private:
 	};
 
 	using iterator = Iterator<pointer, reference>;
+	using const_iterator = Iterator<const_pointer, const_reference>;
 
 	node* fictive_node; // in standart realisation of microsoft and gcc list zakolcovan
 	size_t _size;
@@ -428,6 +431,14 @@ public:
 
 	iterator end() {
 		return iterator(fictive_node);
+	}
+
+	const_iterator cbegin() {
+		return const_iterator(fictive_node->next);
+	}
+
+	const_iterator cend() {
+		return const_iterator(fictive_node);
 	}
 
 	T& operator[](int n) {

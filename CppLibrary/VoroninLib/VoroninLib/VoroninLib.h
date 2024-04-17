@@ -228,7 +228,8 @@ private:
 		T data;
 		node* next;
 		node* prev;
-		node(T d, node* p, node* n) : data(d), prev(p), next(n) {}
+		node(const T& d, node* p, node* n) : data(d), prev(p), next(n) {}
+		node(T&& d, node* p, node* n) : data(std::move(d)), prev(p), next(n) {}
 	};
 
 	using value_type = T;
@@ -311,7 +312,7 @@ private:
 	}
 
 	// Для типа elem из тестов
-	node* create_node(const T&& elem, node* prev, node* next) { // для чего тут prev/next?
+	node* create_node(T&& elem, node* prev, node* next) { // для чего тут prev/next?
 		node* node = Alloc.allocate(1);
 
 		std::allocator_traits<AllocType>::construct(Alloc, &(node->prev), prev);
@@ -359,7 +360,7 @@ public:
 		}
 	}
 
-	explicit List(int size): List() {
+	explicit List(int size) : List() {
 		while (size > 0) {
 			push_back(T());
 			size--;
@@ -378,7 +379,7 @@ public:
 		push_back(std::move(T(value)));
 	}
 
-	void push_back(const T&& value) {
+	void push_back(T&& value) {
 		node* newNode = create_node(std::move(value), fictive_node->prev, fictive_node);
 		fictive_node->prev->next = newNode; // перепресваивание указателя с фиктивной вершины на новый эл-ет.
 		fictive_node->prev = newNode;
@@ -393,7 +394,7 @@ public:
 		push_front(std::move(T(value)));
 	}
 
-	void push_front(const T&& value) {
+	void push_front(T&& value) {
 		node* newNode = create_node(std::move(value), fictive_node, fictive_node->next);
 		fictive_node->next->prev = newNode; // перепресваивание указателя с фиктивной вершины на новый эл-ет.
 		fictive_node->next = newNode;

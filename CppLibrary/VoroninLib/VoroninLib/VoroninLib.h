@@ -286,6 +286,8 @@ private:
 
 	using iterator = Iterator<pointer, reference>;
 	using const_iterator = Iterator<const_pointer, const_reference>;
+	using reverse_iterator = std::reverse_iterator<iterator>;
+	using const_reverse_iterator = std::reverse_iterator<const_iterator>;
 
 	node* fictive_node; // in standart realisation of microsoft and gcc list zakolcovan
 	size_t _size;
@@ -473,6 +475,25 @@ public:
 
 	const_iterator end() const {
 		return const_iterator(fictive_node);
+	}
+
+	reverse_iterator rbegin() noexcept {
+		return reverse_iterator(end());
+	}
+	const_reverse_iterator rbegin() const noexcept {
+		return const_reverse_iterator(cend());
+	}
+	const_reverse_iterator crbegin() const noexcept {
+		return const_reverse_iterator(cend());
+	}
+	reverse_iterator rend() noexcept {
+		return reverse_iterator(begin());
+	}
+	const_reverse_iterator rend() const noexcept {
+		return const_reverse_iterator(cbegin());
+	}
+	const_reverse_iterator crend() const noexcept {
+		return const_reverse_iterator(cbegin());
 	}
 
 	

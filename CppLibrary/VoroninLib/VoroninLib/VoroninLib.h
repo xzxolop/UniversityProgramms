@@ -3,8 +3,6 @@
 
 #include <functional>
 #include <iostream>
-#include <variant>
-#include <concepts>
 #include <ostream>
 #include <stack>
 #include <queue>
@@ -50,7 +48,7 @@ void print(const std::initializer_list<std::variant<int, double, std::string, ch
 
 	print_v(*last);
 }
-
+*/
 
 template<typename T>
 class myvector {
@@ -236,6 +234,8 @@ private:
 	class Iterator : public std::iterator<std::bidirectional_iterator_tag, value_type, difference_type, Pointer, Reference> {
 	public:
 		// пять юзингов неявно появятся из-за наследования
+		
+		friend class List; // у класса лист теперь есть доступ к закрытым полям итератора.
 
 		Iterator(node* pp) : p(pp) {}
 
@@ -322,6 +322,7 @@ private:
 
 	// служебная функция для удаления элемента.
 	void remove_node(node* temp) {
+		if (temp == fictive_node) throw new std::out_of_range("list is empty");
 		temp->prev->next = temp->next;
 		temp->next->prev = temp->prev;
 		delete_node(temp);
@@ -374,7 +375,6 @@ public:
 	}
 
 	void pop_back() {
-		if (is_empty()) throw new std::out_of_range("list is empty");
 		remove_node(fictive_node->prev);
 	}
 
@@ -390,11 +390,33 @@ public:
 	}
 
 	void pop_front() {
-		if (is_empty()) throw new std::out_of_range("list is empty");
 		remove_node(fictive_node->next);
 	}
 
-	
+	iterator erase(iterator position) { // ??
+		++position;
+		remove_node(position.p->prev);
+		return position;
+	}
+
+	iterator erase(const_iterator position) {
+		++position;
+		remove_node(position.p->prev);
+		return position;
+	}
+
+	iterator erase(const_iterator first, const_iterator last) {
+		node* left = first.p->prev;
+		node* temp = first.p;
+		while (temp != last.p) {
+			temp = temp->next;
+			remove_node(temp->prev);
+		}
+		left->next = last.p;
+		last.p->prev = left;
+
+		return last;
+	}
 
 	size_t size() const noexcept {
 		return _size;
@@ -428,7 +450,7 @@ public:
 		return iterator(fictive_node);
 	}
 
-	const_iterator cbegin() {
+	const_iterator cbegin() { // real const ?
 		return const_iterator(fictive_node->next);
 	}
 
@@ -436,6 +458,15 @@ public:
 		return const_iterator(fictive_node);
 	}
 
+	const_iterator begin() const { // fake const ?
+		return const_iterator(fictive_node->next);
+	}
+
+	const_iterator end() const {
+		return const_iterator(fictive_node);
+	}
+
+	
 	T& operator[](int n) {
 		if (n + 1 > _size) {
 			throw std::invalid_argument("Index out of range");

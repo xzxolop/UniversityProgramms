@@ -224,40 +224,56 @@ private:
 		node(T d, node* p, node* n) : data(d), prev(p), next(n) {}
 	};
 
-	class iterator {
+	using value_type = T;
+	using iterator_category = std::input_iterator_tag;
+	using pointer = value_type*;
+	using reference = value_type&;
+	using difference_type = std::ptrdiff_t;
+
+	template<typename Pointer, typename Reference>
+	class Iterator : public std::iterator<std::bidirectional_iterator_tag, value_type, difference_type, Pointer, Reference> {
 	public:
-		using value_type = T;
-		using iterator_category = std::input_iterator_tag;
-		using pointer = value_type*;
-		using reference = value_type&;
-		using difference_type = std::ptrdiff_t;
+		// пять юзингов неявно появятся из-за наследования
 
-		iterator(node* pp) : p(pp) {}
+		Iterator(node* pp) : p(pp) {}
 
-		T operator*() { return p->data; }
+		Reference operator*() { return p->data; } // ? возвращаем по ссылке чтобы можно было написать *(l) = 10. можно изменить
 
-		iterator& operator++() {
+		Iterator& operator++() {
 			p = p->next;
 			return *this;
 		}
 
-		iterator operator++(int) { // тут нельзя вернуть ссылку из-за удаления it, и сслыка станет битой
-			iterator it = *this; // нужно передавать по значению, т.к. иначе будет ссылка, и мы вернём уже увеличенный it (нарушается идея, постфиксного инкремента)
+		Iterator operator++(int) { // тут нельзя вернуть ссылку из-за удаления it, и сслыка станет битой
+			Iterator it = *this; // нужно передавать по значению, т.к. иначе будет ссылка, и мы вернём уже увеличенный it (нарушается идея, постфиксного инкремента)
 			p = p->next;
 			return it;
 		}
 
-		friend bool operator==(iterator& iter1, iterator& iter2) {
+		Iterator& operator--() {
+			p = p->prev;
+			return *this;
+		}
+
+		Iterator operator--(int) {
+			Iterator it = *this;
+			p = p->prev;
+			return it;
+		}
+
+		friend bool operator==(const Iterator& iter1, const Iterator& iter2) {
 			return iter1.p == iter2.p;
 		}
 
-		friend bool operator!=(iterator& iter1, iterator& iter2) {
+		friend bool operator!=(const Iterator& iter1, const Iterator& iter2) {
 			return !(iter1 == iter2);
 		}
 
 	private:
 		node* p;
 	};
+
+	using iterator = Iterator<pointer, reference>;
 
 	node* fictive_node; // in standart realisation of microsoft and gcc list zakolcovan
 	size_t _size;

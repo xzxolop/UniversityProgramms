@@ -320,6 +320,13 @@ private:
 		delete_fictive_node(node);
 	}
 
+	// служебная функция для удаления элемента.
+	void remove_node(node* temp) {
+		temp->prev->next = temp->next;
+		temp->next->prev = temp->prev;
+		delete_node(temp);
+		_size--;
+	}
 
 
 public:
@@ -368,38 +375,26 @@ public:
 
 	void pop_back() {
 		if (is_empty()) throw new std::out_of_range("list is empty");
-		node* temp = fictive_node->prev;
-		temp->prev->next = temp->next;
-		temp->next->prev = temp->prev;
-		delete_node(temp);
-		_size--;
+		remove_node(fictive_node->prev);
 	}
 
-	/*void push_front(T elem) {
-		node* newNode = new node(elem, nullptr, head);
-		if (head != nullptr) {
-			head->prev = newNode;
-			head = head->prev;
-		}
-		else {
-			head = tail = newNode;
-		}
+	void push_front(const T& value) {
+		push_front(std::move(T(value)));
+	}
+
+	void push_front(const T&& value) {
+		node* newNode = create_node(std::move(value), fictive_node, fictive_node->next);
+		fictive_node->next->prev = newNode; // перепресваивание указателя с фиктивной вершины на новый эл-ет.
+		fictive_node->next = newNode;
 		_size++;
 	}
 
 	void pop_front() {
-		if (head == nullptr) return; 
-		node* temp = head;
-		head = head->next;
-		if (head != nullptr) {
-			head->prev = nullptr;
-		}
-		else {
-			tail = nullptr;
-		}
-		delete temp;
-		_size--;
-	}*/
+		if (is_empty()) throw new std::out_of_range("list is empty");
+		remove_node(fictive_node->next);
+	}
+
+	
 
 	size_t size() const noexcept {
 		return _size;

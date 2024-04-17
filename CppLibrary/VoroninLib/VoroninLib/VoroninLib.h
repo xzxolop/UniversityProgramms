@@ -7,6 +7,15 @@
 #include <stack>
 #include <queue>
 
+#include <initializer_list>
+#include <memory>
+#include <iterator>
+#include <stdexcept>
+
+/*
+#include <variant>
+#include <concepts>
+
 template<typename T>
 concept Printable = requires(const T & t) {
 	std::cout << t;

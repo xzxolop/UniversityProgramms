@@ -12,7 +12,7 @@
 #include <iterator>
 #include <stdexcept>
 
-/*
+
 #include <variant>
 #include <concepts>
 
@@ -57,7 +57,7 @@ void print(const std::initializer_list<std::variant<int, double, std::string, ch
 
 	print_v(*last);
 }
-*/
+
 
 template<typename T>
 class myvector {
@@ -232,6 +232,7 @@ private:
 		node(T&& d, node* p, node* n) : data(std::move(d)), prev(p), next(n) {}
 	};
 
+public:
 	using value_type = T;
 	using iterator_category = std::bidirectional_iterator_tag;
 	using pointer = value_type*;
@@ -239,6 +240,7 @@ private:
 	using difference_type = std::ptrdiff_t;
 	using const_pointer = const pointer;
 	using const_reference = const reference;
+private:
 
 	class iterator;
 
@@ -336,7 +338,7 @@ private:
 	private:
 		friend class List; // у класса лист теперь есть доступ к закрытым полям итератора.
 		node* p;
-		
+
 	};
 
 	using reverse_iterator = std::reverse_iterator<iterator>;
@@ -533,23 +535,27 @@ public:
 	reverse_iterator rbegin() noexcept {
 		return reverse_iterator(end());
 	}
+
 	const_reverse_iterator rbegin() const noexcept {
 		return const_reverse_iterator(cend());
 	}
+
 	const_reverse_iterator crbegin() const noexcept {
 		return const_reverse_iterator(cend());
 	}
+
 	reverse_iterator rend() noexcept {
 		return reverse_iterator(begin());
 	}
+
 	const_reverse_iterator rend() const noexcept {
 		return const_reverse_iterator(cbegin());
 	}
+
 	const_reverse_iterator crend() const noexcept {
 		return const_reverse_iterator(cbegin());
 	}
 
-	
 	T& operator[](int n) {
 		if (n + 1 > _size) {
 			throw std::invalid_argument("Index out of range");
@@ -559,7 +565,7 @@ public:
 			elem = elem->next;
 			n--;
 		}
-		  
+
 		return elem->data;
 	}
 

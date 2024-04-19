@@ -16,7 +16,8 @@ int main() {
 	l.print();
 	l[2] = 90;
 	l.print();
-	l.erase(l.begin());
+	//l.erase(l.begin(), l.end());
+	l.erase(l.cbegin(), l.cend());
 	l.print();
 	
 	

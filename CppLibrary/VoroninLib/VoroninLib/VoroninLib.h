@@ -233,60 +233,112 @@ private:
 	};
 
 	using value_type = T;
-	using iterator_category = std::input_iterator_tag;
+	using iterator_category = std::bidirectional_iterator_tag;
 	using pointer = value_type*;
 	using reference = value_type&;
 	using difference_type = std::ptrdiff_t;
 	using const_pointer = const pointer;
 	using const_reference = const reference;
 
-	template<typename Pointer, typename Reference>
-	class Iterator : public std::iterator<std::bidirectional_iterator_tag, value_type, difference_type, Pointer, Reference> {
+	class iterator;
+
+	class const_iterator {
 	public:
-		// пять юзингов неявно появятся из-за наследования
-		
-		friend class List; // у класса лист теперь есть доступ к закрытым полям итератора.
+		using base = List;
+		using value_type = base::value_type;
+		using iterator_category = base::iterator_category;
+		using difference_type = base::difference_type;
+		using pointer = base::const_pointer;
+		using reference = base::const_reference;
 
-		Iterator(node* pp) : p(pp) {}
+		const_iterator(node* pp) : p(pp) {}
 
-		Reference operator*() { return p->data; } // ? возвращаем по ссылке чтобы можно было написать *(l) = 10. можно изменить
+		const T& operator*() const { return p->data; }
 
-		Iterator& operator++() {
+		const_iterator& operator++() {
+			p = p->next;
+			return *this;
+		}
+		const_iterator operator++(int) {
+			const_iterator rez(*this);
+			p = p->next;
+			return rez;
+		}
+		const_iterator& operator--() {
+			p = p->prev;
+			return *this;
+		}
+		const_iterator operator--(int) {
+			const_iterator rez(*this);
+			p = p->prev;
+			return rez;
+		}
+
+		friend bool operator==(const const_iterator& v1, const const_iterator& v2) {
+			return v1.p == v2.p;
+		}
+		friend bool operator!=(const const_iterator& v1, const const_iterator& v2) {
+			return !(v1 == v2);
+		}
+
+		operator iterator() {
+			return iterator(p);
+		}
+
+	private:
+		friend class List;
+		node* p;
+	};
+
+	class iterator {
+	public:
+		using base = List;
+		using value_type = base::value_type;
+		using iterator_category = base::iterator_category;
+		using difference_type = base::difference_type;
+		using pointer = base::pointer;
+		using reference = base::reference;
+
+		iterator(node* pp) : p(pp) {}
+
+		reference operator*() { return p->data; } // ? возвращаем по ссылке чтобы можно было написать *(l) = 10. можно изменить
+
+		iterator& operator++() {
 			p = p->next;
 			return *this;
 		}
 
-		Iterator operator++(int) { // тут нельзя вернуть ссылку из-за удаления it, и сслыка станет битой
-			Iterator it = *this; // нужно передавать по значению, т.к. иначе будет ссылка, и мы вернём уже увеличенный it (нарушается идея, постфиксного инкремента)
+		iterator operator++(int) { // тут нельзя вернуть ссылку из-за удаления it, и сслыка станет битой
+			iterator it = *this; // нужно передавать по значению, т.к. иначе будет ссылка, и мы вернём уже увеличенный it (нарушается идея, постфиксного инкремента)
 			p = p->next;
 			return it;
 		}
 
-		Iterator& operator--() {
+		iterator& operator--() {
 			p = p->prev;
 			return *this;
 		}
 
-		Iterator operator--(int) {
-			Iterator it = *this;
+		iterator operator--(int) {
+			iterator it = *this;
 			p = p->prev;
 			return it;
 		}
 
-		friend bool operator==(const Iterator& iter1, const Iterator& iter2) {
+		friend bool operator==(const iterator& iter1, const iterator& iter2) {
 			return iter1.p == iter2.p;
 		}
 
-		friend bool operator!=(const Iterator& iter1, const Iterator& iter2) {
+		friend bool operator!=(const iterator& iter1, const iterator& iter2) {
 			return !(iter1 == iter2);
 		}
 
 	private:
+		friend class List; // у класса лист теперь есть доступ к закрытым полям итератора.
 		node* p;
+		
 	};
 
-	using iterator = Iterator<pointer, reference>;
-	using const_iterator = Iterator<const_pointer, const_reference>;
 	using reverse_iterator = std::reverse_iterator<iterator>;
 	using const_reverse_iterator = std::reverse_iterator<const_iterator>;
 
@@ -462,11 +514,11 @@ public:
 		return iterator(fictive_node);
 	}
 
-	const_iterator cbegin() { // real const ?
+	const_iterator cbegin() const { // real const ?
 		return const_iterator(fictive_node->next);
 	}
 
-	const_iterator cend() {
+	const_iterator cend() const {
 		return const_iterator(fictive_node);
 	}
 

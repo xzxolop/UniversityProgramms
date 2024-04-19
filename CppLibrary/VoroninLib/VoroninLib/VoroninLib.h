@@ -499,6 +499,7 @@ public:
 	}
 
 	void print() const {
+		if (_size == 0)  return;
 		node* n = fictive_node->next;
 		while (n != fictive_node)
 		{
@@ -567,6 +568,32 @@ public:
 		}
 
 		return elem->data;
+	}
+
+	List& operator=(const List& other) {
+		clear();
+		for (auto x : other) {
+			push_back(x);
+		}
+		return *this;
+	}
+
+	List& operator=(List&& other) noexcept {
+		clear();
+		std::swap(fictive_node, other.fictive_node);
+		std::swap(Alloc, other.Alloc);
+		std::swap(_size, other._size);
+		other.fictive_node = nullptr;
+		other._size = 0;
+		return *this;
+	}
+
+	List& operator=(std::initializer_list<T> ilist) {
+		clear();
+		for (auto x : ilist) {
+			push_back(x);
+		}
+		return *this;
 	}
 
 	~List() {

@@ -19,6 +19,18 @@ int main() {
 	//l.erase(l.begin(), l.end());
 	l.erase(l.cbegin(), l.cend());
 	l.print();
+
+	List<int> l2 {1, 2, 3, 4, 5};
+
+	l = l2;
+	l2.push_back(10);
+	l.print();
+	l = { 1,2,3 };
+	l.print();
+
+	l = std::move(l2);
+	l.print();
+	l2.print();
 	
 	
 

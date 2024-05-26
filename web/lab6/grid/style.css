@@ -1,0 +1,112 @@
+body{
+    background-color: coral;
+}
+
+.root{
+    display: grid;
+    grid-template-areas:
+    "cell-1 cell-3 cell-5"
+    "cell-7 cell-9 cell-8"
+    "cell-6 cell-4 cell-2"
+;
+}
+
+.cell{
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    align-items: center;
+}
+
+.cell_header{
+    color: green;
+    text-align: center;
+}
+
+.cell_pics{
+    height: 128px;
+    width: 256px;
+}
+
+.cell_quote_text{
+    text-align: justify;
+    color: blue;
+}
+
+.cell_header{
+    border: 5px solid transparent;
+    transition: border-color;
+}
+
+.cell_header:hover{
+    border-color: green;
+    background-color: yellow;
+}
+
+.cell_pics{
+    border: 5px solid transparent;
+    transition: border-color;
+}
+
+.cell_pics:hover{
+    border-color: green;
+    background-color: yellow;
+}
+
+.cell_quote{
+    border: 5px solid transparent;
+    transition: border-color;
+}
+
+.cell_quote:hover{
+    border-color: green;
+    background-color: yellow;
+}
+
+.cell_quote_text_sourse{
+    border: 5px solid transparent;
+    transition: border-color;
+}
+
+.cell_quote_text_sourse:hover{
+    border-color: green;
+    background-color: yellow;
+}
+
+
+#cell1{
+    grid-area: cell-1;
+    background-color: cyan;
+}
+#cell2{
+    grid-area: cell-2;
+    background-color: darkblue;
+}
+#cell3{
+    grid-area: cell-3;
+    background-color: darksalmon;
+}
+#cell4{
+    grid-area: cell-4;
+    background-color: red;
+}
+#cell5{
+    grid-area: cell-5;
+    background-color: black;
+}
+#cell6{
+    grid-area: cell-6;
+    background-color: brown;
+}
+#cell7{
+    grid-area: cell-7;
+    background-color: deepskyblue;
+}
+#cell8{
+    grid-area: cell-8;
+    background-color: green;
+}
+#cell9{
+    grid-area: cell-9;
+    background-color: coral;
+}

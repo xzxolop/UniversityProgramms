@@ -1,0 +1,85 @@
+body {
+    height: 100%;
+    background-color: #1D1D1D;
+}
+
+.column {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.row {
+    height: 33%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.cell-1 {
+    width: 33%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: aqua;
+}
+
+.cell-2 {
+    width: 33%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: blueviolet;
+}
+
+.cell-3 {
+    width: 33%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: burlywood;
+}
+
+.cell-4 {
+    width: 33%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color:chartreuse;
+}
+
+.cell-5 {
+    width: 33%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color:gold;
+}
+
+.cell-6 {
+    width: 33%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color:red;
+}
+
+.image {
+    width: 50%;
+    height: 50%;
+}
+
+
+.image:hover {
+    border: 2px solid green;
+}
+
+.cell-header:hover {
+    border: 2px solid green;
+}
+
+.description:hover {
+    border: 2px solid green;
+}

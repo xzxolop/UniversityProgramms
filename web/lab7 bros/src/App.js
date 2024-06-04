@@ -1,9 +1,10 @@
-import './App.css'; // можно убрать
+import './App.css';
+import Myban from './model';
 
 export default function App() {
   return (
     <div className="App">
-      <header className="App-header"></header>
+      <Myban/>
     </div>
   );
 }

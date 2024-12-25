@@ -43,11 +43,22 @@
 .label	err1		0xFE
 .label	out1		0xFD
 .label	in1		0xFC
+.label  sqr1     0x16
 
 // default instruction to place in any unused addresses of the control store
 .default	goto err1
 
 Main1	PC = PC + 1; fetch; goto (MBR)	// MBR holds opcode; get next byte; dispatch
+
+
+sqr1 H = OPC = TOS
+sqr2 OPC = OPC - 1
+sqr3 Z=OPC; if (Z) goto sqr7; else goto sqr4
+sqr4 TOS = TOS + H //result +num
+sqr5 OPC = OPC - 1 //loop
+sqr6 goto sqr3
+sqr7 MDR = TOS //result
+sqr8 MAR = SP; wr; goto Main1
 
 nop1	goto Main1			// Do nothing
 

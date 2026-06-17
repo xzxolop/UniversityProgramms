@@ -1,0 +1,83 @@
+{VERSION 6 0 "IBM INTEL NT" "6.0" }
+{USTYLETAB {CSTYLE "Maple Input" -1 0 "Courier" 1 12 255 0 0 1 2 1 2 
+2 1 2 0 0 0 1 }{CSTYLE "2D Output" -1 20 "Times" 1 12 0 0 255 1 2 2 2 
+2 2 2 0 0 0 1 }{PSTYLE "Normal" -1 0 1 {CSTYLE "" -1 -1 "Times" 1 12 
+0 0 0 1 2 2 2 2 2 2 1 0 0 1 }1 1 0 0 0 0 2 0 2 0 2 2 -1 1 }{PSTYLE "Te
+xt Output" -1 2 1 {CSTYLE "" -1 -1 "Courier" 1 10 0 0 255 1 0 0 0 0 0 
+1 3 0 3 0 }1 0 0 -1 -1 -1 0 0 0 0 0 0 -1 0 }{PSTYLE "Warning" 2 7 1 
+{CSTYLE "" -1 -1 "" 0 1 0 0 255 1 0 0 0 0 0 0 1 0 0 0 }0 0 0 -1 -1 -1 
+0 0 0 0 0 0 -1 0 }{PSTYLE "Error" 7 8 1 {CSTYLE "" -1 -1 "" 0 1 255 0 
+255 1 0 0 0 0 0 0 0 0 0 0 }0 0 0 -1 -1 -1 0 0 0 0 0 0 -1 0 }{PSTYLE "M
+aple Output" -1 11 1 {CSTYLE "" -1 -1 "Times" 1 12 0 0 0 1 2 2 2 2 2 
+2 1 0 0 1 }3 1 0 0 0 0 2 0 2 0 2 2 -1 1 }{PSTYLE "" 11 12 1 {CSTYLE "
+" -1 -1 "" 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 }1 0 0 -1 -1 -1 0 0 0 0 0 
+0 -1 0 }}
+{SECT 0 {EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 9 "restart;\n" }
+{MPLTEXT 1 0 25 "n:=6; left:=1; right:=6;\n" }{MPLTEXT 1 0 23 "h:=(rig
+ht-left)/(n-1);\n" }{MPLTEXT 1 0 20 "Xold:= array(1..n):\n" }{MPLTEXT 
+1 0 20 "Yold:= array(1..n):\n" }{MPLTEXT 1 0 74 "for i from 1 to n do \+
+Xold[i]:= left +(i-1)*h;Yold[i]:=4*(X[i]^2): end do:\n" }{MPLTEXT 1 0 
+44 "print(\"X\" = evalm(Xold), \"Y\"= evalm(Yold));\n" }}}{EXCHG 
+{PARA 0 "> " 0 "" {MPLTEXT 1 0 79 "for i from 1 to n do Xnew[i]:=ln(Xo
+ld[i]); Ynew[i]:=evalf(ln(Yold[i])): end do:" }}{PARA 0 "> " 0 "" 
+{MPLTEXT 1 0 0 "" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 25 "MNK:=pr
+oc(n, Xnew, Ynew)\n" }{MPLTEXT 1 0 41 "local SumX, SumY, SumXX, SumXY,
+ i, A, B;\n" }{MPLTEXT 1 0 38 "SumX:=0; SumY:=0; SumXX:=0; SumXY:=0;\n
+" }{MPLTEXT 1 0 21 "for i from 1 to n do\n" }{MPLTEXT 1 0 103 "SumX:=S
+umX+Xnew[i]: SumY:=SumY+Ynew[i]; SumXX:=SumXX + (Xnew[i]^2); SumXY:= S
+umXY + (Xnew[i]*Ynew[i]);\n" }{MPLTEXT 1 0 8 "end do:\n" }{MPLTEXT 1 
+0 66 "A:= evalf((n * SumXY - SumX * SumY)/ (n * SumXX - SumX * SumX));
+ \n" }{MPLTEXT 1 0 32 "B:= evalf((SumY - A*SumX) / n);\n" }{MPLTEXT 1 
+0 13 "return A, B;\n" }{MPLTEXT 1 0 9 "end proc:" }}}{EXCHG {PARA 0 ">
+ " 0 "" {MPLTEXT 1 0 26 "A, B:=MNK(n, Xnew, Ynew);\n" }{MPLTEXT 1 0 
+29 "F:=(x)->evalf(exp(B)*(x^A));\n" }{MPLTEXT 1 0 5 "F(x);" }}{PARA 
+12 "" 1 "" {XPPMATH 20 "6#>6$%\"AG%\"BG6$,.*&$\"+RbQP=!#5\"\"\"-%#lnG6
+#,$*&$\"\"%\"\"!F-)&%\"XG6#\"\"#F:F-F-F-!\"\"*&$\"+b!o.V*!#8F--F/6#,$*
+&F3F-)&F86#\"\"$F:F-F-F-F-*&$\"+0rw>8F,F--F/6#,$*&F3F-)&F86#F4F:F-F-F-
+F-*&$\"+QK9OBF,F--F/6#,$*&F3F-)&F86#\"\"&F:F-F-F-F-*&$\"+1IemJF,F--F/6
+#,$*&F3F-)&F86#\"\"'F:F-F-F-F-*&$\"+$=QX*\\F,F--F/6#,$*&F3F-)&F86#F-F:
+F-F-F-F;,.*&$\"++pQVrF,F-FeoF-F-*&$\"+RoV\"o$F,F-F.F-F-*&$\"+ueKc;F,F-
+F@F-F-*&$\"*zn[>#F,F-FKF-F-*&$\"*0A,&*)F,F-FUF-F;*&$\"+!=Cc!=F,F-FjnF-
+F;" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#>%\"FGf*6#%\"xG6\"6$%)operatorG%
+&arrowGF(-%&evalfG6#*&-%$expG6#%\"BG\"\"\")9$%\"AGF4F(F(F(" }}{PARA 
+12 "" 1 "" {XPPMATH 20 "6#*&-%$expG6#,.*&$\"++pQVr!#5\"\"\"-%#lnG6#,$*
+&$\"\"%\"\"!F,)&%\"XG6#F,\"\"#F,F,F,F,*&$\"+RoV\"o$F+F,-F.6#,$*&F2F,)&
+F76#F9F9F,F,F,F,*&$\"+ueKc;F+F,-F.6#,$*&F2F,)&F76#\"\"$F9F,F,F,F,*&$\"
+*zn[>#F+F,-F.6#,$*&F2F,)&F76#F3F9F,F,F,F,*&$\"*0A,&*)F+F,-F.6#,$*&F2F,
+)&F76#\"\"&F9F,F,F,!\"\"*&$\"+!=Cc!=F+F,-F.6#,$*&F2F,)&F76#\"\"'F9F,F,
+F,F^oF,)%\"xG,.*&$\"+RbQP=F+F,F=F,F^o*&$\"+b!o.V*!#8F,FGF,F,*&$\"+0rw>
+8F+F,FRF,F,*&$\"+QK9OBF+F,FfnF,F,*&$\"+1IemJF+F,FboF,F,*&$\"+$=QX*\\F+
+F,F-F,F^oF," }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 1 "\n" }
+{MPLTEXT 1 0 10 "sigma:=0:\n" }{MPLTEXT 1 0 21 "for i from 1 to n do\n
+" }{MPLTEXT 1 0 44 "sigma:=evalf(sigma+(F(Xold[i])-Yold[i])^2);\n" }
+{MPLTEXT 1 0 8 "end do:\n" }{MPLTEXT 1 0 24 "print(\"sigma\" = sigma);
+\n" }}{PARA 12 "" 1 "" {XPPMATH 20 "6#/Q&sigma6\",.*$),&-%$expG6#,.*&$
+\"++pQVr!#5\"\"\"-%#lnG6#,$*&$\"\"%\"\"!F2)&%\"XG6#F2\"\"#F2F2F2F2*&$
+\"+RoV\"o$F1F2-F46#,$*&F8F2)&F=6#F?F?F2F2F2F2*&$\"+ueKc;F1F2-F46#,$*&F
+8F2)&F=6#\"\"$F?F2F2F2F2*&$\"*zn[>#F1F2-F46#,$*&F8F2)&F=6#F9F?F2F2F2F2
+*&$\"*0A,&*)F1F2-F46#,$*&F8F2)&F=6#\"\"&F?F2F2F2!\"\"*&$\"+!=Cc!=F1F2-
+F46#,$*&F8F2)&F=6#\"\"'F?F2F2F2FdoF2*&$F9F:F2F;F2FdoF?F2F2*$),&*&F*F2)
+$F?F:,.*&$\"+RbQP=F1F2FCF2Fdo*&$\"+b!o.V*!#8F2FMF2F2*&$\"+0rw>8F1F2FXF
+2F2*&$\"+QK9OBF1F2F\\oF2F2*&$\"+1IemJF1F2FhoF2F2*&$\"+$=QX*\\F1F2F3F2F
+doF2F2*&$F9F:F2FGF2FdoF?F2F2*$),&*&F*F2)$FTF:FhpF2F2*&$F9F:F2FQF2FdoF?
+F2F2*$),&*&F*F2)F8FhpF2F2*&$F9F:F2FfnF2FdoF?F2F2*$),&*&F*F2)$FcoF:FhpF
+2F2*&$F9F:F2F`oF2FdoF?F2F2*$),&*&F*F2)$F_pF:FhpF2F2*&$F9F:F2F\\pF2FdoF
+?F2F2" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 61 "xy:=zip((x,y)->[x,
+y],convert(Xold,list),convert(Yold,list));\n" }{MPLTEXT 1 0 13 "with(p
+lots):\n" }{MPLTEXT 1 0 27 "gr1:=plot(xy, color=blue):\n" }{MPLTEXT 1 
+0 43 "gr2:=plot(F(x), x=left..right, color=red):\n" }{MPLTEXT 1 0 18 "
+display(gr1, gr2);" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#>%#xyG7(7$\"\"\"
+,$*&\"\"%F')&%\"XG6#F'\"\"#F'F'7$F/,$*&F*F')&F-6#F/F/F'F'7$\"\"$,$*&F*
+F')&F-6#F7F/F'F'7$F*,$*&F*F')&F-6#F*F/F'F'7$\"\"&,$*&F*F')&F-6#FDF/F'F
+'7$\"\"',$*&F*F')&F-6#FKF/F'F'" }}{PARA 7 "" 1 "" {TEXT -1 153 "Warnin
+g, unable to evaluate the function to numeric values in the region; se
+e the plotting command's help page to ensure the calling sequence is c
+orrect\n" }}{PARA 7 "" 1 "" {TEXT -1 153 "Warning, unable to evaluate \+
+the function to numeric values in the region; see the plotting command
+'s help page to ensure the calling sequence is correct\n" }}{PARA 8 "
+" 1 "" {TEXT -1 26 "Plotting error, empty plot" }}}{EXCHG {PARA 0 "> \+
+" 0 "" {MPLTEXT 1 0 0 "" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 0 "
+" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 0 "" }}}{EXCHG {PARA 0 "> \+
+" 0 "" {MPLTEXT 1 0 0 "" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 0 "
+" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 0 "" }}}}{MARK "0 0 6" 44 }
+{VIEWOPTS 1 1 0 1 1 1803 1 1 1 1 }{PAGENUMBERS 0 1 2 33 1 1 }

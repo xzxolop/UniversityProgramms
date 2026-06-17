@@ -1,0 +1,82 @@
+{VERSION 6 0 "IBM INTEL NT" "6.0" }
+{USTYLETAB {CSTYLE "Maple Input" -1 0 "Courier" 0 1 255 0 0 1 0 1 0 0 
+1 0 0 0 0 1 }{CSTYLE "2D Math" -1 2 "Times" 0 1 0 0 0 0 0 0 2 0 0 0 0 
+0 0 1 }{CSTYLE "2D Output" 2 20 "" 0 1 0 0 255 1 0 0 0 0 0 0 0 0 0 1 }
+{PSTYLE "Normal" -1 0 1 {CSTYLE "" -1 -1 "Times" 1 12 0 0 0 1 2 2 2 2 
+2 2 1 1 1 1 }1 1 0 0 0 0 1 0 1 0 2 2 0 1 }{PSTYLE "Maple Output" -1 
+11 1 {CSTYLE "" -1 -1 "Times" 1 12 0 0 0 1 2 2 2 2 2 2 1 1 1 1 }3 3 0 
+0 0 0 1 0 1 0 2 2 0 1 }{PSTYLE "Maple Plot" -1 13 1 {CSTYLE "" -1 -1 "
+Times" 1 12 0 0 0 1 2 2 2 2 2 2 1 1 1 1 }3 1 0 0 0 0 1 0 1 0 2 2 0 1 }
+}
+{SECT 0 {EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 8 "restart;" }}}{EXCHG 
+{PARA 0 "> " 0 "" {MPLTEXT 1 0 27 "a:=2.8; b:=4.7; eps:=0.001;" }}
+{PARA 11 "" 1 "" {XPPMATH 20 "6#>%\"aG$\"#G!\"\"" }}{PARA 11 "" 1 "" 
+{XPPMATH 20 "6#>%\"bG$\"#Z!\"\"" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#>%$
+epsG$\"\"\"!\"$" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 22 "f:=(x)->
+evalf(3^x-81);" }}{PARA 13 "" 0 "" {TEXT -1 0 "" }}{PARA 11 "" 1 "" 
+{XPPMATH 20 "6#>%\"fGf*6#%\"xG6\"6$%)operatorG%&arrowGF(-%&evalfG6#,&)
+\"\"$9$\"\"\"\"#\")!\"\"F(F(F(" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 
+1 0 110 "# code = 1 Error Method (\355\345 \365\342\340\362\350\353
+\356 \350\362\345\360\340\366\350\351).\n# code = 9 Error (a,b) (\355
+\340 \356\362\360\345\347\352\345 \352\356\360\355\377 \355\345\362).
+\n# code = 0 Good." }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 0 "" }}
+{PARA 0 "> " 0 "" {MPLTEXT 1 0 33 "Bisection:=proc(left,right,eps,F)" 
+}}{PARA 0 "> " 0 "" {MPLTEXT 1 0 36 "local a, b, c, iter, error_code, \+
+pr;" }}{PARA 0 "> " 0 "" {MPLTEXT 1 0 15 "a:=evalf(left);" }}{PARA 0 "
+> " 0 "" {MPLTEXT 1 0 196 "b:=evalf(right);\nerror_code:=0;\nif F(a)*F
+(b)>0 then error_code:=9;\nelif abs(F(a))<eps then c:=a; iter:=1; erro
+r_code:=0;\nelif abs(F(b))<eps then c:=b; iter:=1; error_code:=0;  \n \+
+ \nelse\n  pr:=true;" }}{PARA 0 "> " 0 "" {MPLTEXT 1 0 58 "  for iter \+
+from 1 to 10 while (abs(a-b)>2*eps) and (pr) do" }}{PARA 0 "> " 0 "" 
+{MPLTEXT 1 0 15 "    c:=(a+b)/2:" }}{PARA 0 "> " 0 "" {MPLTEXT 1 0 40 
+"    print(\"a= \", a, \"c= \", c, \"b= \", b);" }}{PARA 0 "> " 0 "" 
+{MPLTEXT 1 0 87 "    if F(c)*F(a) < 0 then b:=c \n    elif F(c)*F(b)<0
+ then a:=c; else pr:=false; end if:" }}{PARA 0 "> " 0 "" {MPLTEXT 1 0 
+25 "   end do:\n   c:=(a+b)/2:" }}{PARA 0 "> " 0 "" {MPLTEXT 1 0 44 " \+
+  if iter = 11 then error_code:=1; end if;\n" }}{PARA 0 "> " 0 "" 
+{MPLTEXT 1 0 35 "end if;\nreturn c, iter, error_code;" }}{PARA 0 "> " 
+0 "" {MPLTEXT 1 0 10 "end proc:\n" }}}{EXCHG {PARA 0 "> " 0 "" 
+{MPLTEXT 1 0 227 "a:=3.8; b:=4.4; eps:=0.001;\nrez:=Bisection(a,b,eps,
+f):\nif rez[3]=1 then print(\"Error Method\");\nelif rez[3]=9 then pri
+nt(\"Error (a,b)\");\n\nelse print(\"\312\356\360\345\355\374 \363\360
+\340\342\355\345\355\350\377=\",rez[1],\" \327\350\361\353\356 \350
+\362\345\360\340\366\350\351=\",rez[2],\" f=\",f(rez[1]));\nend if;\n
+" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#>%\"aG$\"#Q!\"\"" }}{PARA 11 "" 1 
+"" {XPPMATH 20 "6#>%\"bG$\"#W!\"\"" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#
+>%$epsG$\"\"\"!\"$" }}{PARA 11 "" 1 "" {XPPMATH 20 "6(Q$a=~6\"$\"#Q!\"
+\"Q$c=~F$$\"+++++T!\"*Q$b=~F$$\"#WF'" }}{PARA 11 "" 1 "" {XPPMATH 20 "
+6(Q$a=~6\"$\"#Q!\"\"Q$c=~F$$\"++++]R!\"*Q$b=~F$$\"+++++TF+" }}{PARA 
+11 "" 1 "" {XPPMATH 20 "6(Q$a=~6\"$\"++++]R!\"*Q$c=~F$$\"++++DSF'Q$b=~
+F$$\"+++++TF'" }}{PARA 11 "" 1 "" {XPPMATH 20 "6(Q$a=~6\"$\"++++]R!\"*
+Q$c=~F$$\"+++]()RF'Q$b=~F$$\"++++DSF'" }}{PARA 11 "" 1 "" {XPPMATH 20 
+"6(Q$a=~6\"$\"+++]()R!\"*Q$c=~F$$\"+++D1SF'Q$b=~F$$\"++++DSF'" }}
+{PARA 11 "" 1 "" {XPPMATH 20 "6(Q$a=~6\"$\"+++]()R!\"*Q$c=~F$$\"++](o*
+RF'Q$b=~F$$\"+++D1SF'" }}{PARA 11 "" 1 "" {XPPMATH 20 "6(Q$a=~6\"$\"++
+](o*R!\"*Q$c=~F$$\"++Dc,SF'Q$b=~F$$\"+++D1SF'" }}{PARA 11 "" 1 "" 
+{XPPMATH 20 "6(Q$a=~6\"$\"++](o*R!\"*Q$c=~F$$\"+](=#**RF'Q$b=~F$$\"++D
+c,SF'" }}{PARA 11 "" 1 "" {XPPMATH 20 "6(Q$a=~6\"$\"+](=#**R!\"*Q$c=~F
+$$\"+D1R+SF'Q$b=~F$$\"++Dc,SF'" }}{PARA 11 "" 1 "" {XPPMATH 20 "6(Q2|e
+w|iy|[z|`y|hy|gz~|^z|[z|[y|]y|hy|`y|hy|cy|jz=6\"$\"+(o/)**R!\"*Q1~|bx|
+cy|\\z|fy|iy~|cy|]z|`y|[z|[y|az|cy|dy=F$\"#5Q$~f=F$$!(dyt\"!\")" }}}
+{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 225 "a:=4; b:=4.4; eps:=0.001;\n
+rez:=Bisection(a,b,eps,f):\nif rez[3]=1 then print(\"Error Method\");
+\nelif rez[3]=9 then print(\"Error (a,b)\");\n\nelse print(\"\312\356
+\360\345\355\374 \363\360\340\342\355\345\355\350\377=\",rez[1],\" \+
+\327\350\361\353\356 \350\362\345\360\340\366\350\351=\",rez[2],\" f=
+\",f(rez[1]));\nend if;\n" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#>%\"aG\"
+\"%" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#>%\"bG$\"#W!\"\"" }}{PARA 11 "
+" 1 "" {XPPMATH 20 "6#>%$epsG$\"\"\"!\"$" }}{PARA 11 "" 1 "" {XPPMATH 
+20 "6(Q2|ew|iy|[z|`y|hy|gz~|^z|[z|[y|]y|hy|`y|hy|cy|jz=6\"$\"\"%\"\"!Q
+1~|bx|cy|\\z|fy|iy~|cy|]z|`y|[z|[y|az|cy|dy=F$\"\"\"Q$~f=F$$F'F'" }}}
+{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 226 "a:=-2.0; b:=4; eps:=0.001;
+\nrez:=Bisection(a,b,eps,f):\nif rez[3]=1 then print(\"Error Method\")
+;\nelif rez[3]=9 then print(\"Error (a,b)\");\n\nelse print(\"\312\356
+\360\345\355\374 \363\360\340\342\355\345\355\350\377=\",rez[1],\" \+
+\327\350\361\353\356 \350\362\345\360\340\366\350\351=\",rez[2],\" f=
+\",f(rez[1]));\nend if;\n" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#>%\"aG$!#
+?!\"\"" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#>%\"bG\"\"%" }}{PARA 11 "" 
+1 "" {XPPMATH 20 "6#>%$epsG$\"\"\"!\"$" }}{PARA 11 "" 1 "" {XPPMATH 
+20 "6(Q2|ew|iy|[z|`y|hy|gz~|^z|[z|[y|]y|hy|`y|hy|cy|jz=6\"$\"\"%\"\"!Q
+1~|bx|cy|\\z|fy|iy~|cy|]z|`y|[z|[y|az|cy|dy=F$\"\"\"Q$~f=F$$F'F'" }}}
+{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 0 "" }}}}{MARK "8 0 0" 0 }
+{VIEWOPTS 1 1 0 1 1 1803 1 1 1 1 }{PAGENUMBERS 0 1 2 33 1 1 }

@@ -1,0 +1,12 @@
+// v71.jas
+//
+//
+//  Description
+//    Program to sqares the number
+//
+
+.main				// start of program
+start:
+	BIPUSH 0x2
+	SQR
+.end-main
